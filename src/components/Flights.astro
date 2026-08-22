@@ -3,52 +3,43 @@ import ResponsiveImage from "./ResponsiveImage.astro";
 import { whatsapp } from "../config/links";
 
 const bullets = [
-  "Fares sourced across the routes airlines don't always surface first",
-  "Multi-city and regional connections planned properly, not bolted together",
-  "One quote on WhatsApp — no hidden fees, no fare that changes at checkout",
+  "Domestic, regional and international routes",
+  "Flexible-date sourcing for the best fare",
+  "Group bookings handled as one conversation",
 ];
 ---
 
 <section id="flights" aria-labelledby="flights-heading" class="bg-white py-20 md:py-28">
   <div class="mx-auto grid max-w-content grid-cols-1 items-center gap-10 px-5 md:grid-cols-2 md:gap-16 md:px-gutter">
-    <div>
-      <p data-reveal class="reveal eyebrow">Flights</p>
-      <h2
-        id="flights-heading"
-        data-reveal
-        class="reveal mt-4 text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop"
-      >
-        Get there for less. <span class="accent-italic">up to 45% off flights.</span>
+    <div data-reveal data-reveal-from="left" class="reveal">
+      <p class="eyebrow">Flights</p>
+      <h2 id="flights-heading" class="mt-4 text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop">
+        Get there for less.<br /><span class="accent-italic">up to 45% off flights.</span>
       </h2>
-      <ul data-reveal-group="flights-bullets" class="mt-8 flex flex-col gap-4">
+      <ul class="mt-8 flex flex-col gap-4">
         {
           bullets.map((bullet) => (
-            <li data-reveal data-reveal-group="flights-bullets" class="reveal flex items-start gap-3">
+            <li class="flex items-start gap-3">
               <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" aria-hidden="true" />
               <span class="text-body-mobile text-green-700 md:text-body-desktop">{bullet}</span>
             </li>
           ))
         }
       </ul>
-      <a
-        href={whatsapp("flights")}
-        target="_blank"
-        rel="noopener noreferrer"
-        data-reveal
-        class="reveal btn-primary mt-9 inline-flex"
-      >
-        Get a flight quote
+      <a href={whatsapp("flights")} target="_blank" rel="noopener noreferrer" class="btn-primary press mt-9 inline-flex">
+        Find Me a Deal
       </a>
     </div>
 
-    <div data-reveal class="reveal">
+    <div data-reveal data-reveal-from="right" class="reveal">
       <ResponsiveImage
         src="/images/flights"
-        alt="Aircraft wing view above clouds during a Southern Africa flight"
+        alt="Woman looking out of an aircraft window at Table Mountain and the Cape Town coastline below"
         width={1800}
         height={1005}
         class="w-full rounded-card object-cover"
         loading="lazy"
+        drift
       />
     </div>
   </div>

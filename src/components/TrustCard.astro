@@ -2,23 +2,22 @@
 const stats = [
   { value: 45, suffix: "%", prefix: "Up to ", label: "Saved on flights & stays", numeric: true },
   { value: null, display: "WhatsApp", label: "Every trip planned in chat", numeric: false },
-  { value: null, display: "Southern Africa", label: "Our home turf", numeric: false },
 ];
 ---
 
 <div class="relative z-20 -mt-16 px-5 md:-mt-20 md:px-gutter">
   <div
     data-reveal
-    class="reveal mx-auto max-w-3xl rounded-card bg-cream-100 px-6 py-8 shadow-xl shadow-green-900/10 md:px-12 md:py-10"
+    class="reveal mx-auto max-w-2xl rounded-card bg-cream-100 px-6 py-8 shadow-xl shadow-green-900/10 md:px-12 md:py-10"
   >
-    <div class="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-6">
       {
         stats.map((stat) => (
           <div class="text-center md:text-left">
             {stat.numeric ? (
               <p class="text-3xl font-bold text-green-900 md:text-4xl">
                 {stat.prefix}
-                <span data-count-to={stat.value}>0</span>
+                <span data-count-to={stat.value} class="tabular-nums">0</span>
                 {stat.suffix}
               </p>
             ) : (

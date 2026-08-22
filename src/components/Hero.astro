@@ -5,9 +5,9 @@ import { whatsapp } from "../config/links";
 <section
   id="hero"
   aria-labelledby="hero-heading"
-  class="relative flex h-[100svh] min-h-[640px] items-end overflow-hidden bg-green-900 md:items-center"
+  class="relative flex h-[100svh] min-h-[640px] items-end overflow-hidden bg-green-900"
 >
-  <div data-hero-parallax class="absolute inset-0 h-[120%] w-full">
+  <div data-hero-parallax class="absolute left-0 right-0 h-[120%] w-full" style="top: -10%;">
     <picture>
       <source srcset="/images/hero.webp" type="image/webp" />
       <img
@@ -25,28 +25,30 @@ import { whatsapp } from "../config/links";
 
   <div class="hero-scrim absolute inset-0" aria-hidden="true"></div>
 
-  <div class="relative z-10 mx-auto w-full max-w-content px-5 pb-28 md:px-gutter md:pb-32">
+  <div class="relative z-10 mx-auto w-full max-w-content px-5 pb-32 md:px-gutter md:pb-40">
     <div class="max-w-xl">
-      <p data-hero-anim class="eyebrow anim-item">Johannesburg &middot; Southern Africa</p>
       <h1
         id="hero-heading"
         data-hero-anim
-        class="anim-item mt-4 text-h1-mobile text-cream-100 tracking-tight md:text-h1-desktop"
+        class="anim-item delay-0 text-h1-mobile text-cream-100 tracking-tight md:text-h1-desktop"
       >
         Crafting Unforgettable <span class="accent-italic">Experiences</span>
       </h1>
-      <p data-hero-anim class="anim-item mt-5 max-w-md text-body-mobile text-cream-100/85 md:text-body-desktop">
-        We plan flights, stays and experiences across Southern Africa, then hand you a plan — not a login. Real people, one WhatsApp chat away.
+      <p data-hero-anim class="anim-item delay-1 mt-5 max-w-md text-body-mobile text-cream-100/85 md:text-body-desktop">
+        Discounted flights, curated stays, and trips across Southern Africa — planned around how you actually travel.
       </p>
-      <div data-hero-anim class="anim-item mt-8 flex flex-wrap items-center gap-4">
-        <a href={whatsapp("general")} target="_blank" rel="noopener noreferrer" class="btn-primary">
-          Chat on WhatsApp
+      <div class="mt-8 flex flex-wrap items-center gap-4">
+        <a
+          href={whatsapp("general")}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-hero-anim
+          class="anim-item delay-2 btn-primary press"
+        >
+          Plan My Trip
         </a>
-        <a href="#how-it-works" class="btn-secondary">How it works</a>
+        <a href="#how-it-works" data-hero-anim class="anim-item delay-3 btn-secondary press">See What We Do</a>
       </div>
-      <p data-hero-anim class="anim-item mt-6 text-sm text-cream-100/70">
-        No accounts. No booking engine. Just people who know the region.
-      </p>
     </div>
   </div>
 </section>
@@ -91,20 +93,17 @@ import { whatsapp } from "../config/links";
     animation: hero-in 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  .anim-item:nth-child(1) {
+  .delay-0 {
     animation-delay: 0ms;
   }
-  .anim-item:nth-child(2) {
+  .delay-1 {
     animation-delay: 120ms;
   }
-  .anim-item:nth-child(3) {
+  .delay-2 {
     animation-delay: 240ms;
   }
-  .anim-item:nth-child(4) {
+  .delay-3 {
     animation-delay: 360ms;
-  }
-  .anim-item:nth-child(5) {
-    animation-delay: 480ms;
   }
 
   @keyframes hero-in {

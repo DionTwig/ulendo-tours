@@ -3,52 +3,43 @@ import ResponsiveImage from "./ResponsiveImage.astro";
 import { whatsapp } from "../config/links";
 
 const bullets = [
-  "Curated by locals — not aggregated listings",
   "Up to 40% off listed accommodation rates",
+  "Apartments, villas, lodges, boutique hotels",
   "Vetted – we don't send you anywhere we wouldn't stay",
 ];
 ---
 
 <section id="stays" aria-labelledby="stays-heading" class="bg-cream-100 py-20 md:py-28">
   <div class="mx-auto grid max-w-content grid-cols-1 items-center gap-10 px-5 md:grid-cols-2 md:gap-16 md:px-gutter">
-    <div data-reveal class="reveal order-2 md:order-1">
+    <div data-reveal data-reveal-from="left" class="reveal order-2 md:order-1">
       <ResponsiveImage
         src="/images/stays"
-        alt="Boutique accommodation exterior with pool, part of Ulendo's vetted stays"
+        alt="Bedroom interior with open sliding doors onto a deck, overlooking mountains and coastline"
         width={1024}
         height={1024}
         class="w-full rounded-card object-cover aspect-square"
         loading="lazy"
+        drift
       />
     </div>
 
-    <div class="order-1 md:order-2">
-      <p data-reveal class="reveal eyebrow">Stays</p>
-      <h2
-        id="stays-heading"
-        data-reveal
-        class="reveal mt-4 text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop"
-      >
-        Stay where it feels right, <span class="accent-italic">not just where it's cheap.</span>
+    <div data-reveal data-reveal-from="right" class="reveal order-1 md:order-2">
+      <p class="eyebrow">Stays</p>
+      <h2 id="stays-heading" class="mt-4 text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop">
+        Sleep somewhere <span class="accent-italic">worth the photo.</span>
       </h2>
-      <ul data-reveal-group="stays-bullets" class="mt-8 flex flex-col gap-4">
+      <ul class="mt-8 flex flex-col gap-4">
         {
           bullets.map((bullet) => (
-            <li data-reveal data-reveal-group="stays-bullets" class="reveal flex items-start gap-3">
+            <li class="flex items-start gap-3">
               <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" aria-hidden="true" />
               <span class="text-body-mobile text-green-700 md:text-body-desktop">{bullet}</span>
             </li>
           ))
         }
       </ul>
-      <a
-        href={whatsapp("stays")}
-        target="_blank"
-        rel="noopener noreferrer"
-        data-reveal
-        class="reveal btn-primary mt-9 inline-flex"
-      >
-        Find me a stay
+      <a href={whatsapp("stays")} target="_blank" rel="noopener noreferrer" class="btn-primary press mt-9 inline-flex">
+        Find Me a Place
       </a>
     </div>
   </div>

@@ -8,6 +8,7 @@ interface Props {
   loading?: "eager" | "lazy";
   fetchpriority?: "high" | "low" | "auto";
   sizes?: string;
+  drift?: boolean;
 }
 
 const {
@@ -19,6 +20,7 @@ const {
   loading = "lazy",
   fetchpriority = "auto",
   sizes,
+  drift = false,
 } = Astro.props;
 ---
 
@@ -34,5 +36,6 @@ const {
     decoding={loading === "eager" ? "sync" : "async"}
     sizes={sizes}
     class={className}
+    data-drift={drift ? "true" : undefined}
   />
 </picture>

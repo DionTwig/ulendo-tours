@@ -1,10 +1,10 @@
 ---
 import ResponsiveImage from "./ResponsiveImage.astro";
-import { whatsapp, links, isPending } from "../config/links";
+import { whatsapp } from "../config/links";
 
 const includes = [
   "Return flights, Johannesburg to Cape Town",
-  "2 nights in a boutique guesthouse",
+  "Beach view luxury stay",
   "One signature Ulendo experience",
 ];
 ---
@@ -17,21 +17,24 @@ const includes = [
       data-reveal
       class="reveal mt-4 max-w-2xl text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop"
     >
-      Already built. <span class="accent-italic">Just pack a bag.</span>
+      Already built.<br /><span class="accent-italic">Just pack a bag.</span>
     </h2>
 
     <div
       data-reveal
-      class="reveal mt-12 grid grid-cols-1 overflow-hidden rounded-card bg-white shadow-lg shadow-green-900/5 md:mt-16 md:grid-cols-2"
+      data-reveal-from="scale"
+      class="package-card reveal mt-12 grid grid-cols-1 overflow-hidden rounded-card bg-white shadow-lg shadow-green-900/5 md:mt-16 md:grid-cols-2"
     >
-      <ResponsiveImage
-        src="/images/stays"
-        alt="Boutique guesthouse in Cape Town featured in the Cape Town Long Weekend package"
-        width={1024}
-        height={1024}
-        class="h-64 w-full object-cover md:h-full"
-        loading="lazy"
-      />
+      <div class="overflow-hidden">
+        <ResponsiveImage
+          src="/images/exp-couples"
+          alt="Couple relaxing together on a scenic Cape Town getaway, featured in the Cape Town Long Weekend package"
+          width={1200}
+          height={769}
+          class="package-card-image h-64 w-full object-cover md:h-full"
+          loading="lazy"
+        />
+      </div>
 
       <div class="flex flex-col justify-center p-7 md:p-12">
         <p class="eyebrow">Featured package</p>
@@ -58,20 +61,43 @@ const includes = [
         <p class="mt-1 text-xs text-green-700/50">Placeholder pricing — to be confirmed by Ulendo before launch.</p>
 
         <div class="mt-7 flex flex-wrap gap-4">
-          <a href={whatsapp("packages")} target="_blank" rel="noopener noreferrer" class="btn-primary">
+          <a href={whatsapp("packages")} target="_blank" rel="noopener noreferrer" class="btn-primary press">
             Enquire on WhatsApp
-          </a>
-          <a
-            href={links.viator}
-            data-pending={isPending(links.viator) ? "true" : undefined}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-secondary-dark"
-          >
-            View on Viator
           </a>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .package-card {
+    transition: transform 500ms ease-out, box-shadow 500ms ease-out;
+  }
+
+  .package-card-image {
+    transition: transform 500ms ease-out;
+  }
+
+  .package-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(10, 58, 49, 0.15);
+  }
+
+  .package-card:hover .package-card-image {
+    transform: scale(1.05);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .package-card,
+    .package-card-image {
+      transition: none;
+    }
+    .package-card:hover {
+      transform: none;
+    }
+    .package-card:hover .package-card-image {
+      transform: none;
+    }
+  }
+</style>

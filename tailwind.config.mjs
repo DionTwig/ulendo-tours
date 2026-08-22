@@ -47,8 +47,8 @@ export default {
         reveal: "cubic-bezier(0.16, 1, 0.3, 1)",
       },
       fontSize: {
-        "h1-desktop": ["76px", { lineHeight: "1.02", letterSpacing: "-0.025em", fontWeight: "700" }],
-        "h1-mobile": ["40px", { lineHeight: "1.05", letterSpacing: "-0.025em", fontWeight: "700" }],
+        "h1-desktop": ["64px", { lineHeight: "1.02", letterSpacing: "-0.025em", fontWeight: "700" }],
+        "h1-mobile": ["36px", { lineHeight: "1.05", letterSpacing: "-0.025em", fontWeight: "700" }],
         "h2-desktop": ["50px", { lineHeight: "1.05", letterSpacing: "-0.025em", fontWeight: "700" }],
         "h2-mobile": ["32px", { lineHeight: "1.1", letterSpacing: "-0.025em", fontWeight: "700" }],
         "h3-desktop": ["22px", { lineHeight: "1.3", fontWeight: "700" }],

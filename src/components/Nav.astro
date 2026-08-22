@@ -3,10 +3,10 @@ import { whatsapp } from "../config/links";
 
 const navLinks = [
   { href: "#about", label: "About" },
+  { href: "#flights", label: "Flights" },
+  { href: "#stays", label: "Stays" },
   { href: "#experiences", label: "Experiences" },
   { href: "#nights", label: "Nights" },
-  { href: "#packages", label: "Packages" },
-  { href: "#how-it-works", label: "How it works" },
 ];
 ---
 
@@ -16,7 +16,7 @@ const navLinks = [
   style="background-color: rgba(10, 58, 49, 0.55); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);"
 >
   <a href="#main" class="flex items-center gap-2" aria-label="Ulendo Tours home">
-    <img src="/brand/logo-cream.svg" alt="Ulendo Tours" class="h-7 w-auto md:h-8" width="174" height="65" />
+    <img src="/brand/logo-cream.svg" alt="Ulendo Tours" class="h-10 w-auto md:h-12" width="174" height="65" />
   </a>
 
   <nav aria-label="Primary" class="hidden lg:block">
@@ -24,10 +24,7 @@ const navLinks = [
       {
         navLinks.map((item) => (
           <li>
-            <a
-              href={item.href}
-              class="text-sm font-medium text-cream-100/90 transition-colors hover:text-cream-100"
-            >
+            <a href={item.href} class="nav-link relative text-sm font-medium text-cream-100/90 transition-colors hover:text-cream-100">
               {item.label}
             </a>
           </li>
@@ -43,15 +40,15 @@ const navLinks = [
       rel="noopener noreferrer"
       class="hidden md:inline-flex btn-primary !px-5 !py-2.5 text-sm"
     >
-      Chat on WhatsApp
+      Lets Chat..
     </a>
     <a
       href={whatsapp("general")}
       target="_blank"
       rel="noopener noreferrer"
-      class="md:hidden inline-flex items-center justify-center rounded-pill bg-orange-500 px-4 py-2 text-sm font-semibold text-white"
+      class="press md:hidden inline-flex items-center justify-center rounded-pill bg-orange-500 px-4 py-2 text-sm font-semibold text-white"
     >
-      Chat
+      Lets Chat..
     </a>
     <button
       type="button"
@@ -59,12 +56,32 @@ const navLinks = [
       aria-expanded="false"
       aria-controls="mobile-menu"
       aria-label="Toggle menu"
-      class="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-full text-cream-100"
+      class="menu-toggle-btn lg:hidden relative inline-flex h-10 w-10 items-center justify-center rounded-full text-cream-100"
     >
-      <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <svg
+        class="icon-menu"
+        width="22"
+        height="16"
+        viewBox="0 0 22 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
         <path d="M0 1H22" stroke="currentColor" stroke-width="2" />
         <path d="M0 8H22" stroke="currentColor" stroke-width="2" />
         <path d="M0 15H22" stroke="currentColor" stroke-width="2" />
+      </svg>
+      <svg
+        class="icon-close"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <path d="M1 1L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        <path d="M15 1L1 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
       </svg>
     </button>
   </div>
@@ -88,10 +105,12 @@ const navLinks = [
       }
     </ul>
   </nav>
-  <a href={whatsapp("general")} target="_blank" rel="noopener noreferrer" class="btn-primary">
-    Chat on WhatsApp
+  <a href={whatsapp("general")} target="_blank" rel="noopener noreferrer" class="btn-primary press">
+    Lets Chat..
   </a>
 </div>
+
+<div data-scroll-progress class="scroll-progress fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-orange-500" aria-hidden="true"></div>
 
 <style>
   [data-nav].nav-hidden {
@@ -113,6 +132,62 @@ const navLinks = [
   .mobile-menu.is-open {
     opacity: 1;
     visibility: visible;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 2px;
+    background-color: #f15c22;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 250ms ease;
+  }
+
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .scroll-progress {
+    transform: scaleX(0);
+  }
+
+  .icon-menu,
+  .icon-close {
+    position: absolute;
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+
+  .icon-close {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
+  .menu-toggle-btn[aria-expanded="true"] .icon-menu {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
+  .menu-toggle-btn[aria-expanded="true"] .icon-close {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-progress {
+      display: none;
+    }
+    .nav-link::after {
+      transition: none;
+    }
+    .icon-menu,
+    .icon-close {
+      transition: none;
+    }
   }
 </style>
 

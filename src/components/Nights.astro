@@ -1,62 +1,65 @@
 ---
-import { whatsapp } from "../config/links";
+import { whatsapp, links, isPending } from "../config/links";
 
 const bullets = [
-  "Handpicked nights out — no generic club crawls",
-  "A local host who knows the door, the DJ and the vibe",
+  "Hosted club route with pre-arranged access",
+  "Every night curated to the group",
   "Optional pre-brunch in Rosebank or Greenside, and pickup",
+  "Groups of 2 to 10 · up to 15 on request",
 ];
 
 const slides = [
-  { src: "/images/nights-1", alt: "Amapiano DJ set lighting up an Ulendo Nights event" },
-  { src: "/images/nights-2", alt: "Crowd dancing at an Afrobeats night curated by Ulendo Tours" },
-  { src: "/images/nights-3", alt: "Late-night Johannesburg nightlife scene from an Ulendo Nights outing" },
+  { src: "/images/nights-1", alt: "Crowded nightclub dance floor lit by colourful stage lighting" },
+  { src: "/images/nights-2", alt: "Crowd dancing close together under club lighting at night" },
+  { src: "/images/nights-3", alt: "Late-night club scene with a packed dance floor and DJ booth" },
 ];
 ---
 
 <section id="nights" aria-labelledby="nights-heading" class="bg-green-900 py-20 md:py-28">
   <div class="mx-auto grid max-w-content grid-cols-1 items-center gap-10 px-5 md:grid-cols-2 md:gap-16 md:px-gutter">
-    <div>
-      <p data-reveal class="reveal eyebrow">Ulendo Nights</p>
-      <h2
-        id="nights-heading"
-        data-reveal
-        class="reveal mt-4 text-h2-mobile text-cream-100 tracking-tight md:text-h2-desktop"
-      >
-        Amapiano. Afrobeats. <span class="accent-italic">All night.</span>
+    <div data-reveal data-reveal-from="left" class="reveal">
+      <p class="eyebrow">Nightlife</p>
+      <h2 id="nights-heading" class="mt-4 text-h2-mobile text-cream-100 tracking-tight md:text-h2-desktop">
+        Amapiano. Afrobeats.<br /><span class="accent-italic">All night.</span>
       </h2>
-      <p data-reveal class="reveal mt-5 max-w-md text-body-mobile text-cream-100/80 md:text-body-desktop">
+      <p class="mt-5 max-w-md text-body-mobile text-cream-100/80 md:text-body-desktop">
         The nightlife side of every trip — sorted by people who are already out most weekends.
       </p>
-      <ul data-reveal-group="nights-bullets" class="mt-8 flex flex-col gap-4">
+      <ul class="mt-8 flex flex-col gap-4">
         {
           bullets.map((bullet) => (
-            <li data-reveal data-reveal-group="nights-bullets" class="reveal flex items-start gap-3">
+            <li class="flex items-start gap-3">
               <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" aria-hidden="true" />
               <span class="max-w-[26rem] text-body-mobile text-cream-100/85 md:text-body-desktop">{bullet}</span>
             </li>
           ))
         }
       </ul>
-      <a
-        href={whatsapp("nights")}
-        target="_blank"
-        rel="noopener noreferrer"
-        data-reveal
-        class="reveal btn-primary mt-9 inline-flex"
-      >
-        Ask about Ulendo Nights
-      </a>
+      <div class="mt-9 flex flex-wrap gap-4">
+        <a
+          href={links.viator}
+          data-pending={isPending(links.viator) ? "true" : undefined}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary press"
+        >
+          Book on Viator
+        </a>
+        <a href={whatsapp("nights")} target="_blank" rel="noopener noreferrer" class="btn-secondary press">
+          Ask us on WhatsApp
+        </a>
+      </div>
     </div>
 
-    <div data-reveal class="reveal">
+    <div data-reveal data-reveal-from="right" class="reveal">
       <div
         data-slideshow
+        data-drift
         class="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-card md:max-w-none"
         role="region"
         aria-roledescription="carousel"
-        aria-label="Ulendo Nights photo slideshow"
-        aria-live="polite"
+        aria-label="Nightlife photo slideshow"
+        aria-live="off"
         tabindex="0"
       >
         {
@@ -76,15 +79,14 @@ const slides = [
           ))
         }
 
-        <div class="absolute inset-x-0 bottom-5 flex justify-center gap-2" role="tablist" aria-label="Slide navigation">
+        <div class="absolute inset-x-0 bottom-5 flex justify-center gap-2">
           {
             slides.map((slide, index) => (
               <button
                 type="button"
                 data-dot
                 data-index={index}
-                role="tab"
-                aria-selected={index === 0 ? "true" : "false"}
+                aria-current={index === 0 ? "true" : "false"}
                 aria-label={`Show slide ${index + 1} of ${slides.length}`}
                 class="dot h-2.5 w-2.5 rounded-full bg-cream-100/40 transition-colors duration-300"
               />
@@ -106,7 +108,7 @@ const slides = [
     opacity: 1;
   }
 
-  .dot[aria-selected="true"] {
+  .dot[aria-current="true"] {
     background-color: #f15c22;
   }
 
