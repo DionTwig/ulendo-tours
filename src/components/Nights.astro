@@ -1,0 +1,120 @@
+---
+import { whatsapp } from "../config/links";
+
+const bullets = [
+  "Handpicked nights out — no generic club crawls",
+  "A local host who knows the door, the DJ and the vibe",
+  "Optional pre-brunch in Rosebank or Greenside, and pickup",
+];
+
+const slides = [
+  { src: "/images/nights-1", alt: "Amapiano DJ set lighting up an Ulendo Nights event" },
+  { src: "/images/nights-2", alt: "Crowd dancing at an Afrobeats night curated by Ulendo Tours" },
+  { src: "/images/nights-3", alt: "Late-night Johannesburg nightlife scene from an Ulendo Nights outing" },
+];
+---
+
+<section id="nights" aria-labelledby="nights-heading" class="bg-green-900 py-20 md:py-28">
+  <div class="mx-auto grid max-w-content grid-cols-1 items-center gap-10 px-5 md:grid-cols-2 md:gap-16 md:px-gutter">
+    <div>
+      <p data-reveal class="reveal eyebrow">Ulendo Nights</p>
+      <h2
+        id="nights-heading"
+        data-reveal
+        class="reveal mt-4 text-h2-mobile text-cream-100 tracking-tight md:text-h2-desktop"
+      >
+        Amapiano. Afrobeats. <span class="accent-italic">All night.</span>
+      </h2>
+      <p data-reveal class="reveal mt-5 max-w-md text-body-mobile text-cream-100/80 md:text-body-desktop">
+        The nightlife side of every trip — sorted by people who are already out most weekends.
+      </p>
+      <ul data-reveal-group="nights-bullets" class="mt-8 flex flex-col gap-4">
+        {
+          bullets.map((bullet) => (
+            <li data-reveal data-reveal-group="nights-bullets" class="reveal flex items-start gap-3">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" aria-hidden="true" />
+              <span class="max-w-[26rem] text-body-mobile text-cream-100/85 md:text-body-desktop">{bullet}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <a
+        href={whatsapp("nights")}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-reveal
+        class="reveal btn-primary mt-9 inline-flex"
+      >
+        Ask about Ulendo Nights
+      </a>
+    </div>
+
+    <div data-reveal class="reveal">
+      <div
+        data-slideshow
+        class="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-card md:max-w-none"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Ulendo Nights photo slideshow"
+        aria-live="polite"
+        tabindex="0"
+      >
+        {
+          slides.map((slide, index) => (
+            <picture class="slide absolute inset-0" data-slide data-active={index === 0 ? "true" : "false"}>
+              <source srcset={`${slide.src}.webp`} type="image/webp" />
+              <img
+                src={`${slide.src}.jpg`}
+                alt={slide.alt}
+                width={800}
+                height={1000}
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-cover"
+              />
+            </picture>
+          ))
+        }
+
+        <div class="absolute inset-x-0 bottom-5 flex justify-center gap-2" role="tablist" aria-label="Slide navigation">
+          {
+            slides.map((slide, index) => (
+              <button
+                type="button"
+                data-dot
+                data-index={index}
+                role="tab"
+                aria-selected={index === 0 ? "true" : "false"}
+                aria-label={`Show slide ${index + 1} of ${slides.length}`}
+                class="dot h-2.5 w-2.5 rounded-full bg-cream-100/40 transition-colors duration-300"
+              />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .slide {
+    opacity: 0;
+    transition: opacity 800ms ease-in-out;
+  }
+
+  .slide[data-active="true"] {
+    opacity: 1;
+  }
+
+  .dot[aria-selected="true"] {
+    background-color: #f15c22;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide {
+      transition: none;
+    }
+  }
+</style>
+
+<script src="../scripts/nights-slideshow.js"></script>

@@ -1,0 +1,77 @@
+---
+import ResponsiveImage from "./ResponsiveImage.astro";
+import { whatsapp, links, isPending } from "../config/links";
+
+const includes = [
+  "Return flights, Johannesburg to Cape Town",
+  "2 nights in a boutique guesthouse",
+  "One signature Ulendo experience",
+];
+---
+
+<section id="packages" aria-labelledby="packages-heading" class="bg-cream-100 py-20 md:py-28">
+  <div class="mx-auto max-w-content px-5 md:px-gutter">
+    <p data-reveal class="reveal eyebrow">Packages</p>
+    <h2
+      id="packages-heading"
+      data-reveal
+      class="reveal mt-4 max-w-2xl text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop"
+    >
+      Already built. <span class="accent-italic">Just pack a bag.</span>
+    </h2>
+
+    <div
+      data-reveal
+      class="reveal mt-12 grid grid-cols-1 overflow-hidden rounded-card bg-white shadow-lg shadow-green-900/5 md:mt-16 md:grid-cols-2"
+    >
+      <ResponsiveImage
+        src="/images/stays"
+        alt="Boutique guesthouse in Cape Town featured in the Cape Town Long Weekend package"
+        width={1024}
+        height={1024}
+        class="h-64 w-full object-cover md:h-full"
+        loading="lazy"
+      />
+
+      <div class="flex flex-col justify-center p-7 md:p-12">
+        <p class="eyebrow">Featured package</p>
+        <h3 class="mt-3 text-h3-mobile text-green-900 md:text-3xl md:font-bold">Cape Town Long Weekend</h3>
+        <p class="mt-3 text-sm text-green-700/80 md:text-base">
+          Four days, three nights. Flights, a boutique stay and one signature experience — planned end to end.
+        </p>
+
+        <ul class="mt-6 flex flex-col gap-2.5">
+          {
+            includes.map((item) => (
+              <li class="flex items-start gap-3 text-sm text-green-700/85">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" aria-hidden="true" />
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="mt-8 flex flex-wrap items-baseline gap-2">
+          <span class="text-3xl font-bold text-green-900">R8 500</span>
+          <span class="text-sm text-green-700/70">pp, sharing</span>
+        </div>
+        <p class="mt-1 text-xs text-green-700/50">Placeholder pricing — to be confirmed by Ulendo before launch.</p>
+
+        <div class="mt-7 flex flex-wrap gap-4">
+          <a href={whatsapp("packages")} target="_blank" rel="noopener noreferrer" class="btn-primary">
+            Enquire on WhatsApp
+          </a>
+          <a
+            href={links.viator}
+            data-pending={isPending(links.viator) ? "true" : undefined}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-secondary-dark"
+          >
+            View on Viator
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

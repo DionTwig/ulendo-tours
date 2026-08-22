@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    @apply bg-white text-green-700 font-sans text-body-mobile md:text-body-desktop antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-bold;
+  }
+
+  a,
+  button {
+    @apply outline-none;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid #f15c22;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  .accent-italic {
+    @apply text-orange-500 font-bold italic;
+  }
+
+  .eyebrow {
+    @apply block text-eyebrow-mobile md:text-eyebrow uppercase text-orange-500;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-pill px-7 py-4 text-button-mobile md:text-button transition-colors duration-300 ease-smooth;
+  }
+
+  .btn-primary {
+    @apply btn bg-orange-500 text-white hover:bg-orange-600;
+  }
+
+  .btn-secondary {
+    @apply btn bg-transparent border border-cream-100/40 text-cream-100 hover:bg-cream-100/10;
+  }
+
+  .btn-secondary-dark {
+    @apply btn bg-transparent border border-green-700/30 text-green-700 hover:bg-green-700/5;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1), transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}

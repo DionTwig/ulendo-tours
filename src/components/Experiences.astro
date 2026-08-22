@@ -1,0 +1,141 @@
+---
+import ResponsiveImage from "./ResponsiveImage.astro";
+import { whatsapp } from "../config/links";
+
+const cards = [
+  {
+    key: "corporate",
+    title: "Corporate & Team",
+    body: "Offsites and incentive trips that don't feel like a work trip.",
+    image: "/images/exp-corporate",
+    alt: "Colleagues gathered outdoors during a corporate team retreat in Southern Africa",
+  },
+  {
+    key: "girls-trip",
+    title: "Girls' Trip",
+    body: "Spa days, sundowners and just enough adventure to earn the photos.",
+    image: "/images/exp-girls-trip",
+    alt: "Group of friends laughing together on a girls' trip getaway",
+  },
+  {
+    key: "boys-getaway",
+    title: "Boys' Getaway",
+    body: "Golf, game drives and long lunches — planned so nobody has to.",
+    image: "/images/exp-boys-getaway",
+    alt: "Group of friends on a boys' getaway trip in Southern Africa",
+  },
+  {
+    key: "couples",
+    title: "Couples' Escape",
+    body: "Quiet lodges and standout dinners, built around two people.",
+    image: "/images/exp-couples",
+    alt: "Couple enjoying a scenic moment together on a Southern Africa escape",
+  },
+  {
+    key: "explore-africa",
+    title: "Visiting Southern Africa",
+    body: "First time in the region? We'll build the route so you see it properly.",
+    image: "/images/exp-explore-africa",
+    alt: "Scenic Southern African landscape showcasing the region for first-time visitors",
+  },
+];
+---
+
+<section id="experiences" aria-labelledby="experiences-heading" class="bg-white py-20 md:py-28">
+  <div class="mx-auto max-w-content px-5 md:px-gutter">
+    <p data-reveal class="reveal eyebrow">Experiences</p>
+    <h2
+      id="experiences-heading"
+      data-reveal
+      class="reveal mt-4 max-w-2xl text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop"
+    >
+      The trip is the easy part. The experience is what we <span class="accent-italic">craft.</span>
+    </h2>
+
+    <div data-reveal-group="exp-cards" class="mt-12 grid grid-cols-1 gap-6 md:mt-16 md:grid-cols-6">
+      {
+        cards.slice(0, 3).map((card) => (
+          <a
+            href={whatsapp("experiences")}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-reveal
+            data-reveal-group="exp-cards"
+            class="reveal exp-card group md:col-span-2"
+          >
+            <div class="overflow-hidden rounded-card">
+              <ResponsiveImage
+                src={card.image}
+                alt={card.alt}
+                width={640}
+                height={480}
+                class="exp-card-image aspect-[4/3] w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <h3 class="mt-4 text-h3-mobile text-green-900 md:text-h3-desktop">{card.title}</h3>
+            <p class="mt-1.5 text-sm text-green-700/75">{card.body}</p>
+          </a>
+        ))
+      }
+      {
+        cards.slice(3, 5).map((card) => (
+          <a
+            href={whatsapp("experiences")}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-reveal
+            data-reveal-group="exp-cards"
+            class="reveal exp-card group md:col-span-3"
+          >
+            <div class="overflow-hidden rounded-card">
+              <ResponsiveImage
+                src={card.image}
+                alt={card.alt}
+                width={800}
+                height={520}
+                class="exp-card-image aspect-[4/3] w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <h3 class="mt-4 text-h3-mobile text-green-900 md:text-h3-desktop">{card.title}</h3>
+            <p class="mt-1.5 text-sm text-green-700/75">{card.body}</p>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .exp-card {
+    display: block;
+    transition: transform 500ms ease-out;
+  }
+
+  .exp-card-image {
+    transition: transform 500ms ease-out;
+  }
+
+  .exp-card:hover {
+    transform: translateY(-4px);
+    filter: drop-shadow(0 12px 24px rgba(10, 58, 49, 0.15));
+  }
+
+  .exp-card:hover .exp-card-image {
+    transform: scale(1.04);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .exp-card,
+    .exp-card-image {
+      transition: none;
+    }
+    .exp-card:hover {
+      transform: none;
+    }
+    .exp-card:hover .exp-card-image {
+      transform: none;
+    }
+  }
+</style>

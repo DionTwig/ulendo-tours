@@ -1,0 +1,23 @@
+# build output
+dist/
+
+# local dev-tool config (browser preview), not part of the site
+public/.claude/
+
+# dependencies
+node_modules/
+
+# astro
+.astro/
+
+# environment
+.env
+.env.production
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# logs
+npm-debug.log*

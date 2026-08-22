@@ -1,0 +1,119 @@
+---
+import { whatsapp } from "../config/links";
+
+const navLinks = [
+  { href: "#about", label: "About" },
+  { href: "#experiences", label: "Experiences" },
+  { href: "#nights", label: "Nights" },
+  { href: "#packages", label: "Packages" },
+  { href: "#how-it-works", label: "How it works" },
+];
+---
+
+<header
+  data-nav
+  class="fixed inset-x-0 top-8 z-50 mx-auto flex w-[calc(100%-40px)] max-w-content items-center justify-between rounded-pill px-4 py-3 transition-transform duration-300 ease-smooth md:px-6 md:py-4"
+  style="background-color: rgba(10, 58, 49, 0.55); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);"
+>
+  <a href="#main" class="flex items-center gap-2" aria-label="Ulendo Tours home">
+    <img src="/brand/logo-cream.svg" alt="Ulendo Tours" class="h-7 w-auto md:h-8" width="174" height="65" />
+  </a>
+
+  <nav aria-label="Primary" class="hidden lg:block">
+    <ul class="flex items-center gap-8">
+      {
+        navLinks.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="text-sm font-medium text-cream-100/90 transition-colors hover:text-cream-100"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <div class="flex items-center gap-3">
+    <a
+      href={whatsapp("general")}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hidden md:inline-flex btn-primary !px-5 !py-2.5 text-sm"
+    >
+      Chat on WhatsApp
+    </a>
+    <a
+      href={whatsapp("general")}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="md:hidden inline-flex items-center justify-center rounded-pill bg-orange-500 px-4 py-2 text-sm font-semibold text-white"
+    >
+      Chat
+    </a>
+    <button
+      type="button"
+      data-menu-toggle
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label="Toggle menu"
+      class="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-full text-cream-100"
+    >
+      <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M0 1H22" stroke="currentColor" stroke-width="2" />
+        <path d="M0 8H22" stroke="currentColor" stroke-width="2" />
+        <path d="M0 15H22" stroke="currentColor" stroke-width="2" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<div
+  id="mobile-menu"
+  data-mobile-menu
+  class="mobile-menu fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-green-900 lg:hidden"
+>
+  <nav aria-label="Mobile">
+    <ul class="flex flex-col items-center gap-6">
+      {
+        navLinks.map((item) => (
+          <li>
+            <a href={item.href} class="text-2xl font-semibold text-cream-100">
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <a href={whatsapp("general")} target="_blank" rel="noopener noreferrer" class="btn-primary">
+    Chat on WhatsApp
+  </a>
+</div>
+
+<style>
+  [data-nav].nav-hidden {
+    transform: translateY(-120%);
+  }
+
+  @supports not (backdrop-filter: blur(1px)) {
+    [data-nav] {
+      background-color: #0a3a31;
+    }
+  }
+
+  .mobile-menu {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 300ms ease, visibility 300ms ease;
+  }
+
+  .mobile-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+</style>
+
+<script src="../scripts/nav.js"></script>

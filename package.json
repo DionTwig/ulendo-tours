@@ -1,0 +1,21 @@
+{
+  "name": "ulendo-tours",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "postbuild": "node -e \"require('fs').rmSync('dist/.claude', { recursive: true, force: true })\"",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/tailwind": "^5.1.4",
+    "@fontsource-variable/instrument-sans": "^5.1.1",
+    "astro": "^5.1.1",
+    "tailwindcss": "^3.4.17"
+  }
+}

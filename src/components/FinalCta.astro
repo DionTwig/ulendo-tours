@@ -1,0 +1,27 @@
+---
+import { whatsapp } from "../config/links";
+---
+
+<section aria-labelledby="final-cta-heading" class="bg-orange-500 py-20 text-center md:py-28">
+  <div class="mx-auto max-w-2xl px-5 md:px-gutter">
+    <h2
+      id="final-cta-heading"
+      data-reveal
+      class="reveal text-h2-mobile text-white tracking-tight md:text-h2-desktop"
+    >
+      Ready to plan something unforgettable?
+    </h2>
+    <p data-reveal class="reveal mt-5 text-body-mobile text-white md:text-body-desktop">
+      Tell us your dates and we'll come back with a plan — no forms, no logins, just a conversation.
+    </p>
+    <a
+      href={whatsapp("general")}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-reveal
+      class="reveal mt-8 inline-flex items-center justify-center rounded-pill bg-white px-8 py-4 text-button-mobile font-semibold text-green-900 transition-colors duration-300 ease-smooth hover:bg-cream-100 md:text-button"
+    >
+      Chat on WhatsApp
+    </a>
+  </div>
+</section>

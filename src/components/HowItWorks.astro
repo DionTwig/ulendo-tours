@@ -1,0 +1,45 @@
+---
+const steps = [
+  {
+    title: "Message us on WhatsApp",
+    body: "Tell us your dates, budget and the kind of trip you're after.",
+  },
+  {
+    title: "We build a plan",
+    body: "Flights, stays and experiences matched to you — sent back as one clear proposal.",
+  },
+  {
+    title: "You confirm",
+    body: "We lock in your choices with trusted local partners on your behalf.",
+  },
+  {
+    title: "We're on call",
+    body: "Throughout the trip, one WhatsApp chat away if anything needs sorting.",
+  },
+];
+---
+
+<section id="how-it-works" aria-labelledby="how-it-works-heading" class="bg-blue-50 py-20 md:py-28">
+  <div class="mx-auto max-w-content px-5 md:px-gutter">
+    <p data-reveal class="reveal eyebrow">How it works</p>
+    <h2
+      id="how-it-works-heading"
+      data-reveal
+      class="reveal mt-4 max-w-2xl text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop"
+    >
+      Four messages. <span class="accent-italic">One finished trip.</span>
+    </h2>
+
+    <ol data-reveal-group="steps" class="mt-12 grid grid-cols-1 gap-8 md:mt-16 md:grid-cols-4 md:gap-6">
+      {
+        steps.map((step, index) => (
+          <li data-reveal data-reveal-group="steps" class="reveal">
+            <span class="text-4xl font-bold text-orange-500/30">{String(index + 1).padStart(2, "0")}</span>
+            <h3 class="mt-3 text-h3-mobile text-green-900 md:text-h3-desktop">{step.title}</h3>
+            <p class="mt-2 text-sm text-green-700/80 md:text-base">{step.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

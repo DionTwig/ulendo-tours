@@ -1,0 +1,49 @@
+---
+const values = [
+  {
+    title: "Local know-how",
+    body: "We live here. Every recommendation comes from people who've actually made the trip, not a database of listings.",
+  },
+  {
+    title: "Straight-talking prices",
+    body: "One quote, no hidden fees, no upsell funnel. What we send you on WhatsApp is what you pay.",
+  },
+  {
+    title: "One conversation, start to finish",
+    body: "Flights, stays and experiences planned in a single chat thread — not three different logins.",
+  },
+];
+---
+
+<section id="about" aria-labelledby="about-heading" class="bg-blue-50 py-20 md:py-28">
+  <div class="mx-auto max-w-content px-5 md:px-gutter">
+    <p data-reveal class="reveal eyebrow">About Ulendo</p>
+    <h2
+      id="about-heading"
+      data-reveal
+      class="reveal mt-4 max-w-2xl text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop"
+    >
+      We don't sell trips. <span class="accent-italic">We build them.</span>
+    </h2>
+
+    <div class="mt-10 grid grid-cols-1 gap-8 md:mt-14 md:grid-cols-2 md:gap-16">
+      <p data-reveal class="reveal text-body-mobile text-green-700 md:text-body-desktop">
+        Ulendo Tours started with a simple frustration: booking platforms are built for search, not for trips. We're a small Johannesburg-based team who plan Southern Africa travel the way we'd plan it for a friend — flights sourced properly, stays vetted in person, experiences that aren't just a list of attractions.
+      </p>
+      <p data-reveal class="reveal text-body-mobile text-green-700 md:text-body-desktop">
+        No cart. No availability calendar. You message us on WhatsApp, tell us what you're after, and we come back with a plan built around your dates, your budget and your people — then stay on call for the whole trip.
+      </p>
+    </div>
+
+    <div data-reveal-group="values" class="mt-12 grid grid-cols-1 gap-6 md:mt-16 md:grid-cols-3">
+      {
+        values.map((value) => (
+          <div data-reveal data-reveal-group="values" class="reveal rounded-card bg-white p-7 md:p-8">
+            <h3 class="text-h3-mobile text-green-900 md:text-h3-desktop">{value.title}</h3>
+            <p class="mt-3 text-sm text-green-700/80 md:text-base">{value.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
