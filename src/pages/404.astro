@@ -1,0 +1,21 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { whatsapp } from "../config/links";
+---
+
+<Layout title="Page not found | Ulendo Tours" noindex>
+  <section class="flex min-h-[70vh] items-center justify-center bg-green-900 px-5 pb-24 pt-40 text-center md:pt-48">
+    <div class="max-w-lg">
+      <h1 class="text-h2-mobile text-cream-100 tracking-tight md:text-h2-desktop">That route doesn't exist.</h1>
+      <p class="mt-5 text-body-mobile text-cream-100/80 md:text-body-desktop">
+        The page you're looking for isn't here — but the trip still can be.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+        <a href="/" class="btn-primary press">Back to Ulendo</a>
+        <a href={whatsapp("general")} target="_blank" rel="noopener noreferrer" class="btn-secondary press">
+          Chat to Us
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -5,6 +5,11 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: "https://ulendotours.co.za",
   output: "static",
+  trailingSlash: "ignore",
+  build: {
+    format: "file",
+    inlineStylesheets: "auto",
+  },
   integrations: [
     tailwind({
       applyBaseStyles: false,

@@ -1,0 +1,63 @@
+# ---- Force HTTPS and non-www (canonical is https://ulendotours.co.za) ----
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+</IfModule>
+
+# ---- Custom error page ----
+ErrorDocument 404 /404.html
+
+# ---- MIME types (older cPanel Apache builds miss these) ----
+<IfModule mod_mime.c>
+  AddType image/webp                  .webp
+  AddType image/svg+xml               .svg
+  AddType font/woff2                  .woff2
+  AddType application/manifest+json   .webmanifest
+</IfModule>
+
+# ---- Compression ----
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml application/manifest+json
+</IfModule>
+
+# ---- Caching ----
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault                      "access plus 1 month"
+  ExpiresByType text/html             "access plus 0 seconds"
+  ExpiresByType image/jpeg            "access plus 1 year"
+  ExpiresByType image/webp            "access plus 1 year"
+  ExpiresByType image/svg+xml         "access plus 1 year"
+  ExpiresByType font/woff2            "access plus 1 year"
+  ExpiresByType text/css              "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+</IfModule>
+
+# Astro fingerprints everything in /_astro/, so it's safe to cache hard
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|woff2|jpg|jpeg|webp|svg|png|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# ---- Don't serve dotfiles ----
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+Options -Indexes
