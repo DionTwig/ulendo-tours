@@ -4,6 +4,7 @@ import "@fontsource-variable/instrument-sans/wght-italic.css";
 import "../styles/global.css";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import { links } from "../config/links";
 // @ts-ignore — Vite's ?url suffix resolves to the fingerprinted asset path at build time.
 import fontUrl from "@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2?url";
 
@@ -28,6 +29,8 @@ const jsonLd = {
   url: "https://ulendotours.co.za",
   image: ogImage.toString(),
   priceRange: "$$",
+  telephone: "+27799569295",
+  email: "bookings@ulendotours.co.za",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Johannesburg",
@@ -38,6 +41,7 @@ const jsonLd = {
     "@type": "Place",
     name: "Southern Africa",
   },
+  sameAs: [links.instagram, links.facebook],
 };
 ---
 

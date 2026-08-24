@@ -1,69 +1,64 @@
 ---
 import ResponsiveImage from "./ResponsiveImage.astro";
 import { whatsapp } from "../config/links";
-
-const includes = [
-  "Return flights, Johannesburg to Cape Town",
-  "Beach view luxury stay",
-  "One signature Ulendo experience",
-];
 ---
 
 <section id="packages" aria-labelledby="packages-heading" class="bg-cream-100 py-20 md:py-28">
   <div class="mx-auto max-w-content px-5 md:px-gutter">
-    <p data-reveal class="reveal eyebrow">Packages</p>
-    <h2
-      id="packages-heading"
-      data-reveal
-      class="reveal mt-4 max-w-2xl text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop"
-    >
-      Already built.<br /><span class="accent-italic">Just pack a bag.</span>
-    </h2>
+    <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <div>
+        <p data-reveal class="reveal eyebrow">Packages</p>
+        <h2
+          id="packages-heading"
+          data-reveal
+          class="reveal mt-4 max-w-2xl text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop"
+        >
+          Already built.<br /><span class="accent-italic">Just pack a bag.</span>
+        </h2>
+      </div>
+      <p data-reveal class="reveal max-w-xs text-sm text-green-700/80 md:text-base">
+        Fixed itineraries we've already priced and tested. Flights, stay and the days in between
+      </p>
+    </div>
 
     <div
       data-reveal
       data-reveal-from="scale"
-      class="package-card reveal mt-12 grid grid-cols-1 overflow-hidden rounded-card bg-white shadow-lg shadow-green-900/5 md:mt-16 md:grid-cols-2"
+      class="reveal relative mt-12 h-[520px] overflow-hidden rounded-card md:mt-16 md:h-[440px]"
     >
-      <div class="overflow-hidden">
-        <ResponsiveImage
-          src="/images/exp-couples"
-          alt="Couple relaxing together on a scenic Cape Town getaway, featured in the Cape Town Long Weekend package"
-          width={1200}
-          height={769}
-          class="package-card-image h-64 w-full object-cover md:h-full"
-          loading="lazy"
-        />
-      </div>
+      <ResponsiveImage
+        src="/images/package-cape-town"
+        alt="Aerial panoramic view of Cape Town at golden hour, with the V&A Waterfront harbour, Cape Town Stadium and city bowl below Table Mountain, featured in the Cape Town Long Weekend package"
+        width={864}
+        height={355}
+        class="absolute inset-0 h-full w-full object-cover"
+        loading="lazy"
+        drift
+      />
+      <div class="billboard-scrim absolute inset-0" aria-hidden="true"></div>
 
-      <div class="flex flex-col justify-center p-7 md:p-12">
-        <p class="eyebrow">Featured package</p>
-        <h3 class="mt-3 text-h3-mobile text-green-900 md:text-3xl md:font-bold">Cape Town Long Weekend</h3>
-        <p class="mt-3 text-sm text-green-700/80 md:text-base">
-          Four days, three nights. Flights, a boutique stay and one signature experience — planned end to end.
-        </p>
+      <div class="absolute inset-0 flex items-end p-8 md:items-center md:p-0 md:pl-16">
+        <div class="max-w-md">
+          <span class="inline-flex items-center rounded-pill bg-orange-500 px-4 py-1.5 text-[11px] font-semibold uppercase text-white">
+            Most Booked
+          </span>
+          <h3 class="mt-4 text-[30px] font-bold leading-[1.05] tracking-tight text-cream-100 md:text-[44px]">
+            Cape Town Long Weekend
+          </h3>
+          <p class="mt-3 text-sm text-cream-100/80 md:text-base">
+            4 days &middot; Return flights &middot; Sea Point apartment &middot; Table Mountain, Cape Point &amp; a winelands day
+          </p>
 
-        <ul class="mt-6 flex flex-col gap-2.5">
-          {
-            includes.map((item) => (
-              <li class="flex items-start gap-3 text-sm text-green-700/85">
-                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" aria-hidden="true" />
-                {item}
-              </li>
-            ))
-          }
-        </ul>
-
-        <div class="mt-8 flex flex-wrap items-baseline gap-2">
-          <span class="text-3xl font-bold text-green-900">R8 500</span>
-          <span class="text-sm text-green-700/70">pp, sharing</span>
-        </div>
-        <p class="mt-1 text-xs text-green-700/50">Placeholder pricing — to be confirmed by Ulendo before launch.</p>
-
-        <div class="mt-7 flex flex-wrap gap-4">
-          <a href={whatsapp("packages")} target="_blank" rel="noopener noreferrer" class="btn-primary press">
-            Enquire on WhatsApp
-          </a>
+          <div class="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-7">
+            <div>
+              <p class="text-[11px] font-semibold uppercase text-cream-100/60" style="letter-spacing: 1.6px;">From</p>
+              <p class="text-2xl font-bold text-cream-100 md:text-[28px]">R8 500 pp</p>
+            </div>
+            <a href={whatsapp("packages")} target="_blank" rel="noopener noreferrer" class="btn-primary press">
+              Book This Trip
+            </a>
+          </div>
+          <p class="mt-3 text-xs text-cream-100/50">Placeholder pricing — to be confirmed by Ulendo before launch.</p>
         </div>
       </div>
     </div>
@@ -71,33 +66,23 @@ const includes = [
 </section>
 
 <style>
-  .package-card {
-    transition: transform 500ms ease-out, box-shadow 500ms ease-out;
+  .billboard-scrim {
+    background: linear-gradient(
+      to top,
+      rgba(10, 58, 49, 0.92) 0%,
+      rgba(10, 58, 49, 0.5) 45%,
+      rgba(10, 58, 49, 0.1) 100%
+    );
   }
 
-  .package-card-image {
-    transition: transform 500ms ease-out;
-  }
-
-  .package-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 40px rgba(10, 58, 49, 0.15);
-  }
-
-  .package-card:hover .package-card-image {
-    transform: scale(1.05);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .package-card,
-    .package-card-image {
-      transition: none;
-    }
-    .package-card:hover {
-      transform: none;
-    }
-    .package-card:hover .package-card-image {
-      transform: none;
+  @media (min-width: 768px) {
+    .billboard-scrim {
+      background: linear-gradient(
+        to right,
+        rgba(10, 58, 49, 0.92) 0%,
+        rgba(10, 58, 49, 0.5) 55%,
+        rgba(10, 58, 49, 0.1) 100%
+      );
     }
   }
 </style>

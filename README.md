@@ -1,13 +1,13 @@
 # Ulendo Tours — Marketing Site
 
-Single-page Astro + Tailwind CSS site for Ulendo Tours (ulendotours.co.za). Static output, no CMS, no backend. Every conversion path is an outbound link to WhatsApp or Viator.
+Single-page Astro + Tailwind CSS site for Ulendo Tours (ulendotours.co.za). Static output, no CMS, no backend. Every conversion path is an outbound link to WhatsApp, email, or social.
 
 ## Stack
 
 - [Astro](https://astro.build) (static output)
 - Tailwind CSS, configured via `tailwind.config.mjs` with the brand's design tokens
 - `@fontsource-variable/instrument-sans` (self-hosted variable font, no Google Fonts CDN)
-- Vanilla JS for scroll reveal, nav auto-hide, hero parallax, count-up stats and the Nights slideshow — no GSAP/Framer Motion/Lenis
+- Vanilla JS for scroll reveal, nav auto-hide, hero parallax, count-up stats, a scroll progress bar, subtle image drift, and the Nights slideshow — no GSAP/Framer Motion/Lenis
 
 ## Getting started
 
@@ -18,68 +18,43 @@ npm run build    # outputs to dist/
 npm run preview  # preview the production build
 ```
 
+## Before launch
+
+- **`/public/images/package-cape-town.jpg` / `.webp` are low-resolution** (864×355px, the size of the source photo supplied). At 1240px+ wide on desktop the billboard card will visibly upscale and soften this image. It reads fine on mobile/tablet, but before launch it's worth sourcing a higher-resolution version of the same photo (2000px+ wide) and swapping the two files — nothing else needs to change.
+- **Featured package price is still invented.** `R8 500 pp` on the Packages billboard was never a real Ulendo figure. A small "Placeholder pricing" caption is deliberately kept under the price on the live page (even though the approved design doesn't show one) so the site never states a fake price as a genuine offer. Before launch: either replace it with a confirmed real price, or remove the price block from the billboard entirely — and remove the caption once the price is real.
+- **Viator URL is still pending** (`links.viator` in `src/config/links.ts` is `"#"`). The Nights section's "Book on Viator" button is conditionally rendered — it's simply absent from the page while the URL is a placeholder, and `Ask us on WhatsApp` takes over as that section's primary CTA. The moment a real URL lands in `links.ts`, the Viator button reappears automatically with no other code change needed.
+- **Re-check spacing/imagery against the actual Figma file** (https://www.figma.com/design/BzfFY55SSQyxUzY2bTGzRu/Ulendo-Tours-Web-Design) where this build had to infer from a written brief rather than live Figma access (see "Source of truth" below) — most section body copy has since been replaced with client-approved text, but a few blurbs (Experience card bodies, How It Works step copy, package inclusions) are still placeholder voice-matched copy, not sourced from Figma.
+
 ## Source of truth
 
-This build was done **without live Figma access** — the MCP connection hit the Starter plan's tool-call rate limit before it could pull node data, and the exported PDF (`Ulendo Tours — Web Design.pdf`) couldn't be rendered locally (no `poppler`/PDF-to-image tooling on this machine). Everything here was built from the written brief, which the brief itself designates as the fallback. **Before launch, re-check every section against the actual Figma file** (https://www.figma.com/design/BzfFY55SSQyxUzY2bTGzRu/Ulendo-Tours-Web-Design) for exact spacing, imagery choices and any copy not explicitly given in the brief.
+The initial build was done without live Figma access (MCP hit the Starter plan's rate limit; the exported PDF couldn't be rendered locally). Two rounds of client revisions since then have replaced most placeholder copy with the approved text and fixed several implementation bugs — see git history for the full trail. Copy not explicitly specified by the client (card blurbs, step descriptions, package inclusions) remains placeholder voice-matched text and should be reviewed against Figma when convenient.
 
-## Placeholder content — replace before launch
+## Live links
 
-The brief flags these explicitly:
+All outbound links are centralised in `src/config/links.ts`:
 
-- **WhatsApp number** (`src/config/links.ts` → `links.whatsapp.base`) — currently `https://wa.me/27XXXXXXXXX`.
-- **Viator URL** (`src/config/links.ts` → `links.viator`) — currently `#`.
-- **Instagram URL** (`src/config/links.ts` → `links.instagram`) — currently `#`.
-- **Featured package price** (Packages section) — R8 500 pp for the Cape Town Long Weekend is an invented placeholder, labelled as such on the page.
-- **Email address** (`links.email`) — `hello@ulendotours.co.za` needs confirming before launch.
-
-All stubbed links render as normal buttons/links but point at `#` and carry `data-pending="true"` so they're easy to grep for later.
-
-### Additional placeholders introduced during this build (not covered by the brief)
-
-Because the brief only specifies exact copy for headlines and a handful of bullets, the following body copy, card blurbs, step descriptions and package inclusions were **written to match the brand voice**, not sourced from Figma. Flag these for the client to review/replace with final copy once Figma access is restored:
-
-- Hero eyebrow, subhead and trust line
-- About intro paragraphs and the 3 value-card titles/bodies
-- Flights and Stays bullet lists (beyond the two bullets given verbatim in the brief) and their body copy
-- All 5 Experience card blurbs
-- Nights intro copy and bullets 1–2 (bullet 3 is the brief's exact fixed text)
-- How It Works step copy
-- Final CTA copy
-- Footer column labels and blurb
-- Package inclusions list
-
-## Copy fixes applied (per brief)
-
-1. Stays bullet 3: fixed missing apostrophes → "Vetted – we don't send you anywhere we wouldn't stay."
-2. Nights bullet 3: full un-truncated text "Optional pre-brunch in Rosebank or Greenside, and pickup" — wraps on mobile instead of clipping (`max-w-[26rem]`, no `truncate`).
-3. Footer tagline set to the correct "Crafting Unforgettable Experiences" (the PDF export dropped the leading "C" — confirm this is just an export artifact and not an error in the actual Figma text layer).
-4. Stays bullet 2 standardised to an en dash with spaces ("Vetted – we don't...").
-
-## Discount figures used
-
-- Trust card stat: "Up to 45%"
-- Flights H2: "Get there for less. **up to 45% off flights.**"
-- Stays bullet: "Up to 40% off listed accommodation rates"
-
-## Favicon — deliberate deviation from the brief
-
-The brief says to generate the whole favicon set from `mark-green.svg`, including the `apple-touch-icon.png` on a `#0E574A` (dark green) background. Since `mark-green.svg`'s fill is itself a dark green (#0c574a), placing it on a `#0E574A` background would be nearly invisible. The asset manifest separately describes `mark-cream.svg` as "for dark backgrounds," so:
-
-- `favicon.svg` / `favicon.ico` — generated from `mark-green.svg` (green mark, transparent background — reads fine in a light browser tab).
-- `apple-touch-icon.png` — generated from `mark-cream.svg` on a `#0E574A` background instead, for contrast.
-
-Flag this to the client so Figma/brand guidelines can confirm the intended combination.
+- WhatsApp: `+27 79 956 9295` (`wa.me/27799569295`), with a distinct pre-filled message per section.
+- Email: `bookings@ulendotours.co.za`.
+- Instagram: `instagram.com/ulendotours.co.za`.
+- Facebook: page linked in `links.facebook`.
+- Viator: pending (see "Before launch").
 
 ## Accessibility notes
 
-- Orange (`#F15C22`) is used for eyebrow labels and headline accent words per the brand's signature device, even though it's contrast-marginal on white at small sizes (as the brief itself flags). This is a deliberate brand-identity choice, not an oversight — worth a final contrast check with the client's design team before launch, particularly the 13px eyebrow label.
-- The Final CTA band reverses this (white text on solid orange). The heading passes WCAG AA for large text (~3.3:1, needs 3:1); the body paragraph beneath it sits just under the 4.5:1 normal-text threshold even at full white. Flagged here rather than redesigned, since a solid-orange CTA band is an explicit, brand-driven layout choice — worth a look from the client's design team if strict AA compliance is required.
-- All images have descriptive alt text (scene-based, not filename-based).
-- Nights slideshow uses `aria-live="polite"`, labelled dot controls (`role="tab"`), and is fully keyboard/touch operable.
-- Nav has a visible orange focus ring (`:focus-visible`).
-- Everything respects `prefers-reduced-motion: reduce` — reveals, hero animation, parallax and the slideshow all disable transforms/timers.
+- Orange (`#F15C22`) is used for eyebrow labels and headline accent words per the brand's signature device, even though it's contrast-marginal on white at small sizes. This is a deliberate brand-identity choice — worth a final contrast check with the client's design team if strict AA compliance is required, particularly the 13px eyebrow label and the Final CTA band's white-on-orange body text.
+- All images have descriptive, scene-based alt text.
+- The Nights slideshow keeps `aria-live="off"` during autoplay (so it doesn't spam screen readers every 5s) and switches to `aria-live="polite"` only when a visitor drives navigation directly (dot click or swipe). Dots are plain labelled buttons with `aria-current`, not an incomplete tablist/tab pattern.
+- Nav has a visible orange focus ring (`:focus-visible`), and the mobile menu button swaps to a close (×) icon when open.
+- Everything respects `prefers-reduced-motion: reduce` — reveals, hero animation, parallax, the scroll progress bar, image drift and the slideshow all disable transforms/timers.
+
+## Favicon — deliberate deviation from the original brief
+
+The brief said to generate the whole favicon set from `mark-green.svg`, including the `apple-touch-icon.png` on a `#0E574A` (dark green) background. Since `mark-green.svg`'s fill is itself dark green (#0c574a), that combination would be nearly invisible, so:
+
+- `favicon.svg` / `favicon.ico` — generated from `mark-green.svg` (reads fine in a light browser tab).
+- `apple-touch-icon.png` — generated from `mark-cream.svg` on a `#0E574A` background instead, for contrast.
 
 ## Not yet configured
 
-- No analytics (per brief — client hasn't picked a provider yet).
+- No analytics (client hasn't picked a provider yet).
 - No CMS/backend — copy edits are direct file edits in `src/components/*.astro`.

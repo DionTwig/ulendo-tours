@@ -36,16 +36,19 @@ const slides = [
         }
       </ul>
       <div class="mt-9 flex flex-wrap gap-4">
+        {
+          !isPending(links.viator) && (
+            <a href={links.viator} target="_blank" rel="noopener noreferrer" class="btn-primary press">
+              Book on Viator
+            </a>
+          )
+        }
         <a
-          href={links.viator}
-          data-pending={isPending(links.viator) ? "true" : undefined}
+          href={whatsapp("nights")}
           target="_blank"
           rel="noopener noreferrer"
-          class="btn-primary press"
+          class={isPending(links.viator) ? "btn-primary press" : "btn-secondary press"}
         >
-          Book on Viator
-        </a>
-        <a href={whatsapp("nights")} target="_blank" rel="noopener noreferrer" class="btn-secondary press">
           Ask us on WhatsApp
         </a>
       </div>

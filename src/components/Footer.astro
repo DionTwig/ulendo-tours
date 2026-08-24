@@ -1,5 +1,5 @@
 ---
-import { links, isPending, whatsapp } from "../config/links";
+import { links, whatsapp } from "../config/links";
 
 const year = new Date().getFullYear();
 
@@ -35,6 +35,9 @@ const columns = [
         <p class="mt-4 text-sm text-cream-100/75">
           Johannesburg-based. We plan flights, stays and experiences across Southern Africa, one WhatsApp conversation at a time.
         </p>
+        <a href={links.email} class="mt-4 inline-block text-sm text-cream-100/85 underline decoration-cream-100/30 underline-offset-4 transition-colors hover:text-cream-100">
+          bookings@ulendotours.co.za
+        </a>
       </div>
 
       <div class="grid grid-cols-2 gap-10 sm:flex sm:gap-16">
@@ -63,25 +66,41 @@ const columns = [
                 href={whatsapp("general")}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Chat to Ulendo Tours on WhatsApp"
                 class="text-sm text-cream-100/85 transition-colors hover:text-cream-100"
               >
                 WhatsApp
               </a>
             </li>
             <li>
-              <a href={links.email} class="text-sm text-cream-100/85 transition-colors hover:text-cream-100">
+              <a
+                href={links.email}
+                aria-label="Email Ulendo Tours"
+                class="text-sm text-cream-100/85 transition-colors hover:text-cream-100"
+              >
                 Email
               </a>
             </li>
             <li>
               <a
                 href={links.instagram}
-                data-pending={isPending(links.instagram) ? "true" : undefined}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Ulendo Tours on Instagram"
                 class="text-sm text-cream-100/85 transition-colors hover:text-cream-100"
               >
                 Instagram
+              </a>
+            </li>
+            <li>
+              <a
+                href={links.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Ulendo Tours on Facebook"
+                class="text-sm text-cream-100/85 transition-colors hover:text-cream-100"
+              >
+                Facebook
               </a>
             </li>
           </ul>
