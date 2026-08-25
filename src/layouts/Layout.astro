@@ -86,6 +86,7 @@ const jsonLd = {
     <link rel="preload" as="font" type="font/woff2" href={fontUrl} crossorigin="anonymous" />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <slot name="head" />
   </head>
   <body class="bg-white">
     <a

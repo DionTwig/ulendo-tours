@@ -7,10 +7,37 @@
 
   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
   RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+  # Serve clean URLs (e.g. /pay, /terms, /pay/success) as their matching .html
+  # file. build.format: "file" in astro.config.mjs emits pay.html rather than
+  # pay/index.html, and this saves relying on mod_negotiation's MultiViews
+  # (not guaranteed enabled on every cPanel/EasyApache build) to resolve it.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}\.html -f
+  RewriteRule ^(.*)$ $1.html [L]
 </IfModule>
 
 # ---- Custom error page ----
 ErrorDocument 404 /404.html
+
+# ---- Never serve config or log files ----
+# Belt-and-braces only: yoco-config.php lives ABOVE public_html and log files are
+# written above public_html too, so neither should ever be reachable via this
+# document root regardless. This just guards against either ending up here by
+# mistake (e.g. during local testing). Matches the literal filename ending, not
+# a bare substring, so it actually catches "yoco-config.php" and "*.log".
+<FilesMatch "(yoco-config\.php|\.log)$">
+  Require all denied
+</FilesMatch>
+
+# ---- Protect the link generator ----
+<Files "generate-link.php">
+  AuthType Basic
+  AuthName "Ulendo Admin"
+  AuthUserFile /home/USERNAME/.htpasswd
+  Require valid-user
+</Files>
 
 # ---- MIME types (older cPanel Apache builds miss these) ----
 <IfModule mod_mime.c>

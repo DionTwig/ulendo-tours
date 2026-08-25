@@ -59,7 +59,60 @@ The `.htaccess` in this repo force-redirects every request to `https://`. **Conf
 4. Confirm the browser shows a valid padlock/certificate for the domain.
 5. Open `https://ulendotours.co.za/sitemap-index.xml` directly — confirm it loads and lists `sitemap-0.xml`.
 
-## 5. Every future change needs a fresh upload
+## 5. Payments — one-time server setup
+
+The site includes a Yoco Checkout payment flow (`/pay`) backed by three PHP files in `dist/api/`. PHP needs no build step — cPanel just needs to be running **PHP 8.0 or newer** (MultiPHP Manager → select the domain → PHP 8.0+). Do this once, before the payment link is ever sent to a real customer.
+
+### 5.1 Create `yoco-config.php` above `public_html`
+
+This file holds real secrets and must **never** be inside `public_html` (so Apache can never serve it, `.htaccess` rules aside) and must **never** be committed to git.
+
+1. cPanel → File Manager → navigate **up one level from `public_html`** (i.e. to your home directory, `/home/USERNAME/`).
+2. Create a new file named exactly `yoco-config.php`.
+3. Paste the contents of this repo's `yoco-config.example.php`, then fill in real values:
+   - `yoco_secret_key` — from Yoco (Online Sales → Settings → API Keys). Use the `sk_test_...` key while testing; switch to `sk_live_...` only once you're genuinely ready to take real payments, and only ever type it directly into this file on the server.
+   - `webhook_secret` — you'll get this in step 5.3, once the webhook is registered. Leave the placeholder until then.
+   - `link_signing_key` — generate a real random string, e.g. run `php -r "echo bin2hex(random_bytes(32));"` in cPanel's Terminal (or any PHP shell) and paste the output. This is the shared secret `create-checkout.php` and `generate-link.php` both use to sign/verify links — it must match between them.
+   - `terms_version` — matches whatever's live on `/terms` right now.
+   - `log_path` — an absolute path in your home directory, e.g. `/home/USERNAME/ulendo-payments.log`. Do not put this inside `public_html`.
+4. Save. File permissions `644` are fine — it's outside the web root either way.
+
+### 5.2 Create the `.htpasswd` file for `generate-link.php`
+
+`generate-link.php` (the internal link-generator) is protected by HTTP Basic Auth. Easiest path:
+
+1. cPanel → **Directory Privacy** (search "Directory Privacy" in cPanel if it's not on the dashboard).
+2. Navigate to `public_html/api` and enable password protection on that folder — **but note this would also gate the payment/webhook endpoints your customers and Yoco need to reach.** Don't protect the whole `api/` folder. Instead:
+3. Use cPanel's **Terminal** (or any SSH access) to create the password file directly, without gating the folder:
+   ```bash
+   htpasswd -c /home/USERNAME/.htpasswd admin
+   ```
+   (`-c` creates the file; omit it if the file already exists and you're adding a second user. You'll be prompted for a password.)
+4. Confirm the path in `public/.htaccess`'s `AuthUserFile` line matches exactly where you created it (`/home/USERNAME/.htpasswd`) — replace `USERNAME` with your real cPanel username, then rebuild and re-upload.
+5. If Terminal access isn't available on your hosting plan, cPanel's **Directory Privacy** tool can still generate a `.htpasswd` file for you if you point it at a *dummy* subfolder you're not actually using for protection — check the file it creates and copy just the `.htpasswd` file to the home-directory path above, then remove the accidental folder protection it applied.
+
+### 5.3 Register the Yoco webhook
+
+1. In the Yoco dashboard: Online Sales → Settings → Webhooks → add a new webhook.
+2. URL: `https://ulendotours.co.za/api/yoco-webhook.php`
+3. Yoco will show you a signing secret starting with `whsec_` — copy it into `yoco-config.php`'s `webhook_secret` value (step 5.1).
+4. Yoco's dashboard usually offers a "send test event" button — use it, then check that a line appended to the log file at your configured `log_path` (or check `ulendo-payments-errors.log` next to it if nothing appeared, for the rejection reason).
+
+> **Note on webhook verification:** `api/yoco-webhook.php` implements the signature scheme exactly as documented at `developer.yoco.com/online/api-reference/webhooks/verifying-events` (Standard Webhooks / Svix convention: `webhook-id`/`webhook-timestamp`/`webhook-signature` headers, HMAC-SHA256 over `{id}.{timestamp}.{raw body}`, base64-decoded `whsec_`-prefixed secret) and the `payment.succeeded` event payload shape as documented there at time of writing. If Yoco changes either scheme, or a real test event doesn't parse the way `api/yoco-webhook.php` expects, check the current docs and adjust — this was implemented against live documentation, not guessed, but API shapes do change.
+
+### 5.4 Test before going anywhere near a live key
+
+With `sk_test_...` in `yoco-config.php`, nothing here moves real money. Generate a test link via `/api/generate-link.php` (log in with the Basic Auth credentials from 5.2), open it, tick the T&Cs box, and pay with one of [Yoco's documented test cards](https://developer.yoco.com) for test mode. Confirm:
+
+- The amount shown on `/pay` matches what you generated.
+- Editing `amount` in the URL bar breaks the link (signature mismatch → friendly error page).
+- After paying, you land on `/pay/success`.
+- A line appears in the log file at `log_path` with the booking ref, amount, and a `pay_...` Yoco payment ID.
+- Clicking "Cancel" on Yoco's hosted page lands you on `/pay/cancelled`.
+
+Only switch `yoco_secret_key` to a `sk_live_...` key once all of that checks out.
+
+## 6. Every future change needs a fresh upload
 
 **There is no auto-deploy here.** Pushing to GitHub does not update the live site. Any content or code change requires:
 

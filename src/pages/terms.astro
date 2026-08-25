@@ -1,0 +1,439 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { whatsapp } from "../config/links";
+
+type Block = { type: "p"; text: string } | { type: "list"; items: string[] };
+type Clause = { num: string; heading?: string; blocks: Block[]; children?: Clause[] };
+type Section = { num: string; title: string; clauses: Clause[] };
+
+const p = (text: string): Block => ({ type: "p", text });
+const list = (items: string[]): Block => ({ type: "list", items });
+
+const sections: Section[] = [
+  {
+    num: "1",
+    title: "Who we are and what we do",
+    clauses: [
+      { num: "1.1", blocks: [p("Ulendo Tours is a travel curator based in Johannesburg, South Africa. We arrange flights, accommodation, ground transport and experiences on your behalf.")] },
+      { num: "1.2", blocks: [p("We act as an intermediary, not as the supplier. Except where we expressly state otherwise, we do not own or operate the airlines, hotels, guesthouses, lodges, transport providers, venues or activity operators used in your trip. Those services are supplied by third parties under their own terms and conditions.")] },
+      { num: "1.3", blocks: [p("Where we arrange a service supplied by a third party, your contract for that service is with that supplier. Our contract with you is for the arrangement, curation and coordination of those services.")] },
+      { num: "1.4", blocks: [p("[ATTORNEY] Confirm whether Ulendo operates purely as an agent or, for packaged products, as a principal/wholesaler — the liability position differs materially and the wording above must reflect the actual commercial arrangement.")] },
+    ],
+  },
+  {
+    num: "2",
+    title: "Quotes",
+    clauses: [
+      { num: "2.1", blocks: [p("All quotes are provided in South African Rand (ZAR).")] },
+      { num: "2.2", blocks: [p("A quote is valid for 72 hours from the time we send it, unless we state a shorter period. Airfares, accommodation rates and exchange rates move constantly, and we cannot hold a price beyond that window.")] },
+      { num: "2.3", blocks: [p("A quote is an invitation for you to make an offer. Your booking is only confirmed once we have received your deposit in cleared funds and issued a written confirmation.")] },
+      { num: "2.4", blocks: [p("Quotes are based on availability at the time of quoting. If a component becomes unavailable before your deposit is received, we will offer the nearest equivalent at the applicable price.")] },
+    ],
+  },
+  {
+    num: "3",
+    title: "Payment",
+    clauses: [
+      {
+        num: "3.1",
+        heading: "Deposit",
+        blocks: [
+          p("Your deposit is calculated per booking and covers:"),
+          list([
+            "100% of all air ticket costs. Airlines require full payment at the time of ticketing and tickets are generally non-refundable or subject to significant penalties. We do not issue tickets on a partial payment.",
+            "Any deposit required by your accommodation provider or other suppliers, as set by that supplier.",
+            "50% of ground transport, experiences and activity costs.",
+            "Our planning fee in full.",
+          ]),
+          p("Your quote will state your deposit amount and what it covers."),
+        ],
+      },
+      {
+        num: "3.2",
+        heading: "Balance",
+        blocks: [],
+        children: [
+          { num: "3.2.1", blocks: [p("The balance is due 21 days before your departure date, unless your quote states otherwise.")] },
+          { num: "3.2.2", blocks: [p("If your booking is made fewer than 21 days before departure, full payment is required at the time of booking.")] },
+          { num: "3.2.3", blocks: [p("If the balance is not received by the due date, we may treat the booking as cancelled by you, and clause 5 will apply.")] },
+        ],
+      },
+      {
+        num: "3.3",
+        heading: "How payments are made",
+        blocks: [],
+        children: [
+          { num: "3.3.1", blocks: [p("Payments are made by card or instant EFT through our payment provider, or by direct bank transfer to the account we specify in writing.")] },
+          { num: "3.3.2", blocks: [p("We only accept payment into the bank account named on your invoice. We will never ask you to change payment details by email or message. If you receive such a request, contact us on +27 79 956 9295 before paying.")] },
+          { num: "3.3.3", blocks: [p("We book only against cleared funds. A payment showing as pending or unsettled is not cleared. This protects both of us.")] },
+          { num: "3.3.4", blocks: [p("Bank charges, card fees or international transfer costs levied by your own bank are for your account.")] },
+        ],
+      },
+    ],
+  },
+  {
+    num: "4",
+    title: "Changes by you",
+    clauses: [
+      { num: "4.1", blocks: [p("If you ask us to change a confirmed booking, we will do what we can, but changes are subject to supplier availability and supplier charges.")] },
+      { num: "4.2", blocks: [p("You are liable for any change fees, fare differences or rate differences charged by suppliers, plus our administration fee of [AMOUNT] per change.")] },
+      { num: "4.3", blocks: [p("Air tickets are frequently non-changeable. Where a change is not possible, cancellation and rebooking may be the only option, and clause 5 applies.")] },
+    ],
+  },
+  {
+    num: "5",
+    title: "Cancellation by you",
+    clauses: [
+      { num: "5.1", blocks: [p("To cancel, you must notify us in writing at bookings@ulendotours.co.za. The cancellation takes effect on the date we receive that notice.")] },
+      {
+        num: "5.2",
+        blocks: [
+          p("We do not retain a fixed cancellation penalty. On cancellation, you are liable for:"),
+          p("(a) all amounts we have paid or become contractually liable to pay to suppliers on your behalf, which those suppliers will not refund to us; plus (b) our planning fee, which covers work already performed; plus (c) any card or payment processing fees already incurred that are not refunded to us."),
+        ],
+      },
+      { num: "5.3", blocks: [p("We will refund you any balance of your payment remaining after deducting the amounts in 5.2, within 30 days of receiving the relevant supplier refunds.")] },
+      { num: "5.4", blocks: [p("We will provide you with a written breakdown of all amounts retained, supported by supplier documentation, on request. We do not retain more than our actual loss.")] },
+      { num: "5.5", blocks: [p("[ATTORNEY] This clause is drafted to align with the Consumer Protection Act and the Consumer Goods and Services Ombud's position that a retained deposit must reflect actual costs and time incurred, and must not enrich the supplier. Please confirm the drafting is adequate and advise on section 17 of the CPA (consumer's right to cancel advance reservations) and any required disclosure of the cancellation basis at the time of booking.")] },
+    ],
+  },
+  {
+    num: "6",
+    title: "Cancellation or change by us",
+    clauses: [
+      { num: "6.1", blocks: [p("We will only cancel your trip if it becomes impossible or unlawful to provide, or if you have not paid on time.")] },
+      { num: "6.2", blocks: [p("If we cancel for any reason other than your non-payment or breach, we will refund all amounts you have paid to us that we are able to recover from suppliers, plus any amounts we are holding.")] },
+      { num: "6.3", blocks: [p("If a supplier changes or cancels a service, we will use reasonable efforts to arrange an equivalent alternative or to recover a refund on your behalf. We cannot guarantee a refund from a supplier who refuses or is unable to provide one.")] },
+    ],
+  },
+  {
+    num: "7",
+    title: "Circumstances beyond our control",
+    clauses: [
+      { num: "7.1", blocks: [p("We are not liable for failure or delay caused by events beyond our reasonable control, including but not limited to: airline schedule changes, cancellations or insolvency; industrial action; extreme weather; natural disaster; epidemic or pandemic; civil unrest; government action, border closures or travel restrictions; load-shedding or infrastructure failure; and acts of terrorism.")] },
+      { num: "7.2", blocks: [p("In such circumstances we will use reasonable efforts to recover what we can from suppliers on your behalf, but supplier refund policies apply.")] },
+    ],
+  },
+  {
+    num: "8",
+    title: "Your responsibilities",
+    clauses: [
+      { num: "8.1", heading: "Travel documents.", blocks: [p("You are responsible for ensuring you hold a valid passport with sufficient validity and blank pages, and any required visas, permits and health documentation. We can advise, but the responsibility is yours.")] },
+      { num: "8.2", heading: "Name accuracy.", blocks: [p("You must give us names exactly as they appear in your passport. Airlines charge for name corrections and some will not permit them at all. Errors arising from information you supplied are for your account.")] },
+      { num: "8.3", heading: "Minors.", blocks: [p("South Africa has specific documentary requirements for travel with minors. You are responsible for meeting them.")] },
+      { num: "8.4", heading: "Health.", blocks: [p("You are responsible for ensuring you are medically fit to travel and for any vaccinations or medication required for your destination.")] },
+      { num: "8.5", heading: "Travel insurance.", blocks: [p("We strongly recommend comprehensive travel insurance covering cancellation, medical costs, repatriation and baggage. [ATTORNEY] advise whether this should be a condition of booking rather than a recommendation.")] },
+      { num: "8.6", heading: "Timeliness.", blocks: [p("You are responsible for arriving at airports, pickups and activities at the stated times. No refund is due for services missed because you were late.")] },
+    ],
+  },
+  {
+    num: "9",
+    title: "Ulendo Nights and nightlife experiences",
+    clauses: [
+      { num: "9.1", blocks: [p("Ulendo Nights is a hosted experience. We arrange access, transport and coordination. We do not own or operate the venues.")] },
+      { num: "9.2", blocks: [p("Entry to any venue is at the discretion of that venue. We arrange access in advance where possible, but we cannot guarantee entry. Venues may refuse entry for reasons including dress code, capacity, intoxication or conduct.")] },
+      { num: "9.3", blocks: [p("Participants must be 18 years or older and may be required to produce identification.")] },
+      { num: "9.4", blocks: [p("We may remove a participant from the experience, without refund, where their conduct is unsafe, unlawful, or likely to result in the group being refused entry.")] },
+      { num: "9.5", blocks: [p("Alcohol consumption is at your own risk and responsibility.")] },
+      { num: "9.6", blocks: [p("Venue line-ups, DJs and operating nights are set by the venues and may change without notice.")] },
+    ],
+  },
+  {
+    num: "10",
+    title: "Pricing and discounts",
+    clauses: [
+      { num: "10.1", blocks: [p('[ATTORNEY] review the "up to 45%" and "up to 40%" claims used in marketing against section 41 of the CPA (false, misleading or deceptive representations) and advise on the substantiation records we must keep.')] },
+      { num: "10.2", blocks: [p("Package prices shown on our website are indicative and subject to availability and confirmation at the time of booking.")] },
+      { num: "10.3", blocks: [p("Prices may be adjusted before confirmation where a supplier changes its rate, taxes or fuel surcharges change, or exchange rates move materially. You will be told before any adjusted price is confirmed, and may cancel without penalty at that point.")] },
+    ],
+  },
+  {
+    num: "11",
+    title: "Complaints",
+    clauses: [
+      { num: "11.1", blocks: [p("Tell us as soon as possible, ideally while you are still travelling, so we have a chance to fix it. Contact +27 79 956 9295 or bookings@ulendotours.co.za.")] },
+      { num: "11.2", blocks: [p("If we cannot resolve your complaint, you may refer it to the Consumer Goods and Services Ombud (CGSO).")] },
+      { num: "11.3", blocks: [p("[ATTORNEY] confirm current CGSO referral wording and whether ASATA or other referral routes should be included.")] },
+    ],
+  },
+  {
+    num: "12",
+    title: "Liability",
+    clauses: [
+      { num: "12.1", blocks: [p("Nothing in these terms excludes liability that cannot lawfully be excluded, including under the Consumer Protection Act.")] },
+      { num: "12.2", blocks: [p("Subject to 12.1, our liability arising from any booking is limited to the total amount you paid us for that booking.")] },
+      { num: "12.3", blocks: [p("We are not liable for the acts, omissions or default of any third-party supplier.")] },
+      { num: "12.4", blocks: [p("[ATTORNEY] review against sections 48–52 of the CPA (unfair, unreasonable or unjust contract terms) and section 49 (notice required for limitation of risk clauses). Limitation clauses require specific drawing to the consumer's attention and may need separate acknowledgement.")] },
+    ],
+  },
+  {
+    num: "13",
+    title: "Your information",
+    clauses: [
+      { num: "13.1", blocks: [p("We process your personal information in accordance with the Protection of Personal Information Act (POPIA).")] },
+      { num: "13.2", blocks: [p("We collect only what we need to arrange your travel — including name, passport details, contact details, dates of birth where required by suppliers, and payment records.")] },
+      { num: "13.3", blocks: [p("We share your information with suppliers — airlines, accommodation providers, transport operators — as required to make your booking. Some of these are outside South Africa.")] },
+      { num: "13.4", blocks: [p("We retain booking and payment records for the period required by law, including for tax and consumer-complaint purposes.")] },
+      { num: "13.5", blocks: [p("[ATTORNEY] a standalone POPIA-compliant privacy policy is required in addition to this clause, along with an Information Officer registration.")] },
+    ],
+  },
+  {
+    num: "14",
+    title: "Governing law",
+    clauses: [
+      { num: "14.1", blocks: [p("These terms are governed by the law of the Republic of South Africa.")] },
+      { num: "14.2", blocks: [p("The contract between us is concluded in Johannesburg, South Africa, at the moment we issue written confirmation of your booking.")] },
+      { num: "14.3", blocks: [p("[ATTORNEY] clause 14.2 is intended to establish South African jurisdiction, including for clients booking from outside South Africa. Confirm the drafting achieves this and advise on the position for clients in other African markets whose local consumer law may nonetheless apply.")] },
+    ],
+  },
+  {
+    num: "15",
+    title: "Changes to these terms",
+    clauses: [
+      { num: "15.1", blocks: [p("We may update these terms. The version applicable to your booking is the version in force on the date we confirmed your booking, and is recorded against your booking reference.")] },
+    ],
+  },
+];
+
+const attorneyNotes = [
+  "The business is pre-revenue and not yet IATA-accredited; air tickets will be issued via an accredited third party. Please advise whether this affects the agency wording in clause 1.",
+  "Target markets include South Africa and other African countries — Nigeria, Kenya, Ghana, Zimbabwe, Zambia and Botswana — as well as some European traffic.",
+  "Payments are collected via a hosted payment gateway. Acceptance of these terms is captured at checkout with a timestamp, booking reference and terms version recorded against each transaction.",
+  "The nightlife product involves third-party venues, alcohol and late-night group transport. Please advise separately on liability, waivers and insurance for that product.",
+  "No trust account is currently in place. Please advise whether one is required or advisable given client funds are held between deposit and supplier payment.",
+];
+
+const anchorId = (num: string) => num.replace(/\./g, "-");
+
+type Segment = { type: "text" | "attorney"; value: string };
+function splitAttorney(text: string): Segment[] {
+  const idx = text.indexOf("[ATTORNEY]");
+  if (idx === -1) return [{ type: "text", value: text }];
+  const before = text.slice(0, idx).trim();
+  const attorneyText = text.slice(idx);
+  const segments: Segment[] = [];
+  if (before) segments.push({ type: "text", value: before + " " });
+  segments.push({ type: "attorney", value: attorneyText });
+  return segments;
+}
+---
+
+<Layout title="Terms &amp; Conditions | Ulendo Tours">
+  <Fragment slot="head">
+    <meta name="robots" content="index, follow" />
+  </Fragment>
+
+  <div class="bg-white">
+    <div class="mx-auto max-w-content px-5 py-16 md:px-gutter md:py-24">
+      <div class="mx-auto max-w-2xl rounded-card border-2 border-orange-500 bg-orange-500/5 p-5 text-sm text-green-900 md:p-6">
+        <p class="font-bold uppercase tracking-wide text-orange-600">⚠ Draft — not yet legally reviewed</p>
+        <p class="mt-2 text-green-700/90">
+          This document was drafted for a South African commercial attorney to review, amend and approve. It is not
+          enforceable in its current form and must not be published as final. Sections marked
+          <strong>[ATTORNEY]</strong> need specific legal attention.
+        </p>
+      </div>
+
+      <div class="mx-auto mt-10 max-w-2xl">
+        <h1 class="text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop">Terms &amp; Conditions</h1>
+        <p class="mt-2 text-sm text-green-700/70">Ulendo Tours</p>
+
+        <dl class="mt-6 grid grid-cols-1 gap-x-8 gap-y-1 text-sm text-green-700/80 sm:grid-cols-2">
+          <div class="flex gap-2"><dt class="font-semibold text-green-900">Last updated:</dt><dd>[DATE]</dd></div>
+          <div class="flex gap-2"><dt class="font-semibold text-green-900">Version:</dt><dd>Draft 0.1</dd></div>
+          <div class="flex gap-2 sm:col-span-2">
+            <dt class="font-semibold text-green-900">Operated by:</dt>
+            <dd>[REGISTERED ENTITY NAME], trading as Ulendo Tours</dd>
+          </div>
+          <div class="flex gap-2"><dt class="font-semibold text-green-900">Company registration:</dt><dd>[CK/REG NUMBER]</dd></div>
+          <div class="flex gap-2"><dt class="font-semibold text-green-900">VAT number:</dt><dd>[IF REGISTERED]</dd></div>
+          <div class="flex gap-2 sm:col-span-2">
+            <dt class="font-semibold text-green-900">Address:</dt>
+            <dd>[REGISTERED ADDRESS], Johannesburg, South Africa</dd>
+          </div>
+          <div class="flex gap-2 sm:col-span-2">
+            <dt class="font-semibold text-green-900">Contact:</dt>
+            <dd>bookings@ulendotours.co.za &middot; +27 79 956 9295</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Mobile TOC accordion -->
+      <details class="mx-auto mt-8 max-w-2xl rounded-card border border-green-900/10 bg-blue-50 p-4 lg:hidden">
+        <summary class="cursor-pointer text-sm font-semibold text-green-900">Contents</summary>
+        <nav class="mt-3" aria-label="Table of contents">
+          <ol class="flex flex-col gap-2 text-sm">
+            {
+              sections.map((section) => (
+                <li>
+                  <a href={`#${anchorId(section.num)}`} class="text-green-700/85 hover:text-green-900">
+                    {section.num}. {section.title}
+                  </a>
+                </li>
+              ))
+            }
+          </ol>
+        </nav>
+      </details>
+
+      <div class="mx-auto mt-10 grid max-w-content grid-cols-1 gap-12 lg:grid-cols-[220px_1fr] lg:items-start">
+        <!-- Desktop sticky TOC -->
+        <nav class="sticky top-32 hidden lg:block" aria-label="Table of contents">
+          <p class="text-eyebrow uppercase text-green-700/50">Contents</p>
+          <ol class="mt-4 flex flex-col gap-2.5 text-sm">
+            {
+              sections.map((section) => (
+                <li>
+                  <a href={`#${anchorId(section.num)}`} class="text-green-700/80 hover:text-green-900">
+                    {section.num}. {section.title}
+                  </a>
+                </li>
+              ))
+            }
+          </ol>
+        </nav>
+
+        <div class="mx-auto w-full max-w-2xl text-green-900 [&_p]:leading-[1.7] [&_li]:leading-[1.7]">
+          {
+            sections.map((section) => (
+              <section id={anchorId(section.num)} class="scroll-mt-28 border-t border-green-900/10 py-8 first:border-t-0 first:pt-0">
+                <h2 class="text-xl font-bold text-green-900 md:text-2xl">
+                  {section.num}. {section.title}
+                </h2>
+
+                <div class="mt-5 flex flex-col gap-5 text-[17px]">
+                  {section.clauses.map((clause) => (
+                    <div id={anchorId(clause.num)} class="scroll-mt-28">
+                      {clause.heading && (
+                        <p class="mb-1 text-sm font-semibold uppercase tracking-wide text-green-700/60">
+                          {clause.num} {clause.heading}
+                        </p>
+                      )}
+                      {clause.blocks.map((block) =>
+                        block.type === "p" ? (
+                          !clause.heading ? (
+                            <p class="text-green-800">
+                              <span class="mr-2 font-semibold text-green-700/60">{clause.num}</span>
+                              {splitAttorney(block.text).map((seg) =>
+                                seg.type === "attorney" ? (
+                                  <mark class="attorney-callout">{seg.value}</mark>
+                                ) : (
+                                  seg.value
+                                )
+                              )}
+                            </p>
+                          ) : (
+                            <p class="text-green-800">
+                              {splitAttorney(block.text).map((seg) =>
+                                seg.type === "attorney" ? (
+                                  <mark class="attorney-callout">{seg.value}</mark>
+                                ) : (
+                                  seg.value
+                                )
+                              )}
+                            </p>
+                          )
+                        ) : (
+                          <ul class="list-disc space-y-2 pl-5 text-green-800">
+                            {block.items.map((item) => (
+                              <li>
+                                {splitAttorney(item).map((seg) =>
+                                  seg.type === "attorney" ? (
+                                    <mark class="attorney-callout">{seg.value}</mark>
+                                  ) : (
+                                    seg.value
+                                  )
+                                )}
+                              </li>
+                            ))}
+                          </ul>
+                        )
+                      )}
+
+                      {clause.children && (
+                        <div class="mt-3 flex flex-col gap-3 border-l-2 border-green-900/10 pl-4">
+                          {clause.children.map((child) => (
+                            <div id={anchorId(child.num)} class="scroll-mt-28">
+                              {child.blocks.map((block) =>
+                                block.type === "p" ? (
+                                  <p class="text-green-800">
+                                    <span class="mr-2 font-semibold text-green-700/60">{child.num}</span>
+                                    {splitAttorney(block.text).map((seg) =>
+                                      seg.type === "attorney" ? (
+                                        <mark class="attorney-callout">{seg.value}</mark>
+                                      ) : (
+                                        seg.value
+                                      )
+                                    )}
+                                  </p>
+                                ) : (
+                                  <ul class="list-disc space-y-2 pl-5 text-green-800">
+                                    {block.items.map((item) => (
+                                      <li>{item}</li>
+                                    ))}
+                                  </ul>
+                                )
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))
+          }
+
+          <section id="attorney-notes" class="scroll-mt-28 border-t border-green-900/10 py-8">
+            <div class="attorney-callout-block">
+              <h2 class="text-xl font-bold text-green-900 md:text-2xl">Notes for the attorney</h2>
+              <p class="mt-3 text-[17px] text-green-800">Context that may assist your review:</p>
+              <ul class="mt-4 list-disc space-y-2 pl-5 text-[17px] text-green-800">
+                {attorneyNotes.map((note) => <li>{note}</li>)}
+              </ul>
+            </div>
+          </section>
+
+          <div class="mt-8 rounded-card bg-blue-50 p-6 text-center md:p-8">
+            <p class="text-lg font-semibold text-green-900">Questions about these terms?</p>
+            <p class="mt-1 text-sm text-green-700/80">Ask us.</p>
+            <a
+              href={whatsapp("general")}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary press mt-5 inline-flex"
+            >
+              Chat on WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .attorney-callout {
+      display: inline;
+      background-color: rgba(241, 92, 34, 0.12);
+      border-bottom: 2px solid #f15c22;
+      padding: 0.05em 0.3em;
+      border-radius: 4px;
+      font-weight: 600;
+      color: #7a2e0f;
+    }
+
+    .attorney-callout-block {
+      border: 2px solid #f15c22;
+      background-color: rgba(241, 92, 34, 0.05);
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .attorney-callout-block {
+        padding: 32px;
+      }
+    }
+  </style>
+</Layout>

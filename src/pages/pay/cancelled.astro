@@ -1,0 +1,19 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { whatsapp } from "../../config/links";
+---
+
+<Layout title="Payment cancelled | Ulendo Tours" noindex>
+  <section class="flex min-h-[70vh] items-center justify-center bg-green-900 px-5 py-24 text-center">
+    <div class="w-full max-w-[560px] rounded-card bg-cream-100 p-8 text-green-900 md:p-10">
+      <img src="/brand/mark-green.svg" alt="Ulendo Tours" width="39" height="35" class="mx-auto h-10 w-auto" />
+      <h1 class="mt-6 text-2xl font-bold">Payment cancelled</h1>
+      <p class="mt-4 text-body-mobile text-green-700/85 md:text-body-desktop">
+        No payment was taken. If you'd like to try again, or need a fresh link, message us on WhatsApp.
+      </p>
+      <a href={whatsapp("general")} target="_blank" rel="noopener noreferrer" class="btn-primary press mt-8 inline-flex">
+        Chat to Us
+      </a>
+    </div>
+  </section>
+</Layout>

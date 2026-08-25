@@ -15,10 +15,12 @@ node_modules/
 .env
 .env.production
 
+# payments — never commit real secrets or payment logs
+yoco-config.php
+*.log
+npm-debug.log*
+
 # editor
 .vscode/*
 !.vscode/extensions.json
 .idea/
-
-# logs
-npm-debug.log*
