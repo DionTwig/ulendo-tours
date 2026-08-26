@@ -102,27 +102,89 @@
     transform: scale(0.96);
   }
 
+  /*
+   * Reveals are scroll-progress-driven so they reverse on scroll-up, not one-shot.
+   * Preferred path: native CSS scroll-driven animations (animation-timeline: view()),
+   * supported in current Chrome/Edge/Safari — zero JS, genuinely free reversibility.
+   * Fallback (Firefox etc.): src/scripts/scroll-controller.js drives the same
+   * transforms manually from a single shared scroll handler when this isn't supported.
+   */
   .reveal {
     opacity: 0;
     transform: translateY(28px);
-    transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1), transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .reveal[data-reveal-from="left"] {
-    transform: translateX(-40px);
+  @supports (animation-timeline: view()) {
+    .reveal {
+      opacity: 0; /* animation-fill-mode: both covers the rest */
+      transform: none;
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
+
+    .reveal[data-reveal-from="left"] {
+      animation-name: reveal-left;
+    }
+
+    .reveal[data-reveal-from="right"] {
+      animation-name: reveal-right;
+    }
+
+    .reveal[data-reveal-from="scale"] {
+      animation-name: reveal-scale;
+    }
   }
 
-  .reveal[data-reveal-from="right"] {
-    transform: translateX(40px);
-  }
-
-  .reveal[data-reveal-from="scale"] {
-    transform: scale(0.94);
-  }
-
+  /* Manual fallback state (JS sets .is-visible when animation-timeline: view() isn't supported) */
   .reveal.is-visible {
     opacity: 1;
     transform: none;
+    transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1), transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes reveal-up {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes reveal-left {
+    from {
+      opacity: 0;
+      transform: translateX(-40px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes reveal-right {
+    from {
+      opacity: 0;
+      transform: translateX(40px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes reveal-scale {
+    from {
+      opacity: 0;
+      transform: scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -130,6 +192,47 @@
       opacity: 1 !important;
       transform: none !important;
       transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  /* ---- Sticky section stack (Hero → About → Flights → Stay → Experiences) ---- */
+  @media (min-width: 768px) {
+    .stack-frame {
+      position: relative;
+      height: 130vh;
+    }
+
+    .stack-frame-last {
+      height: 260vh;
+    }
+
+    .stack-sticky {
+      position: sticky;
+      top: 0;
+      z-index: var(--stack-z, auto);
+      transform-origin: center top;
+      min-height: 100vh;
+    }
+
+    /* Experiences is a fixed 100vh "stage" for the horizontal pin — its content
+       is designed to fit, unlike the flow-height sections above it, so it's
+       safe to fix the height and clip rather than just set a minimum. */
+    .stack-frame-last .stack-sticky {
+      height: 100vh;
+      overflow: hidden;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stack-frame {
+      height: auto !important;
+    }
+
+    .stack-sticky {
+      position: static !important;
+      transform: none !important;
+      opacity: 1 !important;
     }
   }
 }

@@ -10,37 +10,71 @@ const bullets = [
 ---
 
 <section id="stays" aria-labelledby="stays-heading" class="bg-cream-100 py-20 md:py-28">
-  <div class="mx-auto grid max-w-content grid-cols-1 items-center gap-10 px-5 md:grid-cols-2 md:gap-16 md:px-gutter">
-    <div data-reveal data-reveal-from="left" class="reveal order-2 md:order-1">
+  <div class="mx-auto max-w-content px-5 md:px-gutter">
+    <div
+      data-reveal
+      data-reveal-from="scale"
+      class="reveal relative h-[560px] overflow-hidden rounded-card md:h-[480px]"
+    >
       <ResponsiveImage
         src="/images/stays"
         alt="Bedroom interior with open sliding doors onto a deck, overlooking mountains and coastline"
         width={1024}
         height={1024}
-        class="w-full rounded-card object-cover aspect-square"
+        class="absolute inset-0 h-full w-full object-cover"
         loading="lazy"
         drift
       />
-    </div>
+      <div class="stays-scrim absolute inset-0" aria-hidden="true"></div>
 
-    <div data-reveal data-reveal-from="right" class="reveal order-1 md:order-2">
-      <p class="eyebrow">Stays</p>
-      <h2 id="stays-heading" class="mt-4 text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop">
-        Sleep somewhere <span class="accent-italic">worth the photo.</span>
-      </h2>
-      <ul class="mt-8 flex flex-col gap-4">
-        {
-          bullets.map((bullet) => (
-            <li class="flex items-start gap-3">
-              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" aria-hidden="true" />
-              <span class="text-body-mobile text-green-700 md:text-body-desktop">{bullet}</span>
-            </li>
-          ))
-        }
-      </ul>
-      <a href={whatsapp("stays")} target="_blank" rel="noopener noreferrer" class="btn-primary press mt-9 inline-flex">
-        Find Me a Place
-      </a>
+      <div class="absolute inset-0 flex items-end p-6 sm:p-8 md:items-center md:p-0 md:pl-16">
+        <div class="max-w-md">
+          <p class="eyebrow">Stay</p>
+          <h2 id="stays-heading" class="mt-4 text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop">
+            Sleep somewhere <span class="accent-italic">worth the photo.</span>
+          </h2>
+          <ul class="mt-6 flex flex-col gap-3">
+            {
+              bullets.map((bullet) => (
+                <li class="flex items-start gap-3">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" aria-hidden="true" />
+                  <span class="text-sm text-green-700 md:text-base">{bullet}</span>
+                </li>
+              ))
+            }
+          </ul>
+          <a
+            href={whatsapp("stays")}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary press mt-7 inline-flex"
+          >
+            Let's Book a Stay
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .stays-scrim {
+    background: linear-gradient(
+      to top,
+      rgba(239, 245, 207, 0.97) 0%,
+      rgba(239, 245, 207, 0.9) 44%,
+      rgba(239, 245, 207, 0.1) 100%
+    );
+  }
+
+  @media (min-width: 768px) {
+    .stays-scrim {
+      background: linear-gradient(
+        to right,
+        rgba(239, 245, 207, 0.97) 0%,
+        rgba(239, 245, 207, 0.9) 44%,
+        rgba(239, 245, 207, 0.05) 100%
+      );
+    }
+  }
+</style>

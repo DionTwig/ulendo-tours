@@ -10,37 +10,71 @@ const bullets = [
 ---
 
 <section id="flights" aria-labelledby="flights-heading" class="bg-white py-20 md:py-28">
-  <div class="mx-auto grid max-w-content grid-cols-1 items-center gap-10 px-5 md:grid-cols-2 md:gap-16 md:px-gutter">
-    <div data-reveal data-reveal-from="left" class="reveal">
-      <p class="eyebrow">Flights</p>
-      <h2 id="flights-heading" class="mt-4 text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop">
-        Get there for less.<br /><span class="accent-italic">up to 45% off flights.</span>
-      </h2>
-      <ul class="mt-8 flex flex-col gap-4">
-        {
-          bullets.map((bullet) => (
-            <li class="flex items-start gap-3">
-              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" aria-hidden="true" />
-              <span class="text-body-mobile text-green-700 md:text-body-desktop">{bullet}</span>
-            </li>
-          ))
-        }
-      </ul>
-      <a href={whatsapp("flights")} target="_blank" rel="noopener noreferrer" class="btn-primary press mt-9 inline-flex">
-        Find Me a Deal
-      </a>
-    </div>
-
-    <div data-reveal data-reveal-from="right" class="reveal">
+  <div class="mx-auto max-w-content px-5 md:px-gutter">
+    <div
+      data-reveal
+      data-reveal-from="scale"
+      class="reveal relative h-[560px] overflow-hidden rounded-card md:h-[480px]"
+    >
       <ResponsiveImage
         src="/images/flights"
         alt="Woman looking out of an aircraft window at Table Mountain and the Cape Town coastline below"
         width={1800}
         height={1005}
-        class="w-full rounded-card object-cover"
+        class="absolute inset-0 h-full w-full object-cover"
         loading="lazy"
         drift
       />
+      <div class="flights-scrim absolute inset-0" aria-hidden="true"></div>
+
+      <div class="absolute inset-0 flex items-end p-6 sm:p-8 md:items-center md:justify-end md:p-0 md:pr-16">
+        <div class="max-w-md">
+          <p class="eyebrow">Flights</p>
+          <h2 id="flights-heading" class="mt-4 text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop">
+            Get there for less. <span class="accent-italic">up to 40% off flights.</span>
+          </h2>
+          <ul class="mt-6 flex flex-col gap-3">
+            {
+              bullets.map((bullet) => (
+                <li class="flex items-start gap-3">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" aria-hidden="true" />
+                  <span class="text-sm text-green-700 md:text-base">{bullet}</span>
+                </li>
+              ))
+            }
+          </ul>
+          <a
+            href={whatsapp("flights")}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary press mt-7 inline-flex"
+          >
+            Let's Book
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .flights-scrim {
+    background: linear-gradient(
+      to top,
+      rgba(239, 245, 207, 0.97) 0%,
+      rgba(239, 245, 207, 0.9) 44%,
+      rgba(239, 245, 207, 0.1) 100%
+    );
+  }
+
+  @media (min-width: 768px) {
+    .flights-scrim {
+      background: linear-gradient(
+        to left,
+        rgba(239, 245, 207, 0.97) 0%,
+        rgba(239, 245, 207, 0.9) 44%,
+        rgba(239, 245, 207, 0.05) 100%
+      );
+    }
+  }
+</style>

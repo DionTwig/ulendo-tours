@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
-import TrustCard from "../components/TrustCard.astro";
 import About from "../components/About.astro";
 import Flights from "../components/Flights.astro";
 import Stays from "../components/Stays.astro";
@@ -13,12 +12,31 @@ import FinalCta from "../components/FinalCta.astro";
 ---
 
 <Layout>
-  <Hero />
-  <TrustCard />
-  <About />
-  <Flights />
-  <Stays />
-  <Experiences />
+  <div class="stack-frame" style={{ "--stack-z": 10 }}>
+    <div class="stack-sticky">
+      <Hero />
+    </div>
+  </div>
+  <div class="stack-frame" style={{ "--stack-z": 20 }}>
+    <div class="stack-sticky">
+      <About />
+    </div>
+  </div>
+  <div class="stack-frame" style={{ "--stack-z": 30 }}>
+    <div class="stack-sticky">
+      <Flights />
+    </div>
+  </div>
+  <div class="stack-frame" style={{ "--stack-z": 40 }}>
+    <div class="stack-sticky">
+      <Stays />
+    </div>
+  </div>
+  <div class="stack-frame stack-frame-last" style={{ "--stack-z": 50 }}>
+    <div class="stack-sticky">
+      <Experiences />
+    </div>
+  </div>
   <Nights />
   <Packages />
   <HowItWorks />

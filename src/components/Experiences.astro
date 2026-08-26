@@ -41,8 +41,8 @@ const cards = [
 ];
 ---
 
-<section id="experiences" aria-labelledby="experiences-heading" class="bg-white py-20 md:py-28">
-  <div class="mx-auto max-w-content px-5 md:px-gutter">
+<section id="experiences" aria-labelledby="experiences-heading" class="flex h-full flex-col justify-center bg-white py-20 md:py-0">
+  <div class="mx-auto w-full max-w-content px-5 md:px-gutter">
     <p data-reveal class="reveal eyebrow">Experiences</p>
     <h2
       id="experiences-heading"
@@ -52,64 +52,64 @@ const cards = [
       The trip is the easy part.<br /><span class="accent-italic">The experience is what we craft.</span>
     </h2>
 
-    <div data-reveal-group="exp-cards" class="mt-12 grid grid-cols-1 gap-6 md:mt-16 md:grid-cols-6">
-      {
-        cards.slice(0, 3).map((card) => (
-          <a
-            href={whatsapp("experiences")}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-reveal
-            data-reveal-group="exp-cards"
-            class="reveal exp-card group md:col-span-2"
-          >
-            <div class="overflow-hidden rounded-card">
-              <ResponsiveImage
-                src={card.image}
-                alt={card.alt}
-                width={640}
-                height={480}
-                class="exp-card-image aspect-[4/3] w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <h3 class="mt-4 text-h3-mobile text-green-900 md:text-h3-desktop">{card.title}</h3>
-            <p class="mt-1.5 text-sm text-green-700/75">{card.body}</p>
-          </a>
-        ))
-      }
-      {
-        cards.slice(3, 5).map((card) => (
-          <a
-            href={whatsapp("experiences")}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-reveal
-            data-reveal-group="exp-cards"
-            class="reveal exp-card group md:col-span-3"
-          >
-            <div class="overflow-hidden rounded-card">
-              <ResponsiveImage
-                src={card.image}
-                alt={card.alt}
-                width={800}
-                height={520}
-                class="exp-card-image aspect-[4/3] w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <h3 class="mt-4 text-h3-mobile text-green-900 md:text-h3-desktop">{card.title}</h3>
-            <p class="mt-1.5 text-sm text-green-700/75">{card.body}</p>
-          </a>
-        ))
-      }
+    <div class="mt-8 hidden h-1 w-full overflow-hidden rounded-full bg-green-900/10 md:block" role="presentation">
+      <div data-experiences-progress-fill class="h-full w-full origin-left scale-x-0 bg-orange-500"></div>
+    </div>
+
+    <div class="exp-scroller mt-8 md:mt-10">
+      <div data-experiences-track class="exp-track">
+        {
+          cards.map((card) => (
+            <a
+              href={whatsapp("experiences")}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="exp-card group"
+            >
+              <div class="overflow-hidden rounded-card">
+                <ResponsiveImage
+                  src={card.image}
+                  alt={card.alt}
+                  width={640}
+                  height={480}
+                  class="exp-card-image aspect-[4/3] w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <h3 class="mt-4 text-h3-mobile text-green-900 md:text-h3-desktop">{card.title}</h3>
+              <p class="mt-1.5 text-sm text-green-700/75">{card.body}</p>
+            </a>
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>
 
 <style>
+  .exp-scroller {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .exp-scroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  .exp-track {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+  }
+
   .exp-card {
     display: block;
+    flex: 0 0 78vw;
+    max-width: 340px;
+    scroll-snap-align: start;
     transition: transform 500ms ease-out;
   }
 
@@ -126,6 +126,23 @@ const cards = [
     transform: scale(1.05);
   }
 
+  @media (min-width: 768px) {
+    .exp-scroller {
+      overflow: hidden; /* desktop: track position is JS-driven from page scroll, not its own scrollbar */
+      scroll-snap-type: none;
+    }
+
+    .exp-card {
+      flex-basis: 400px;
+      max-width: 400px;
+    }
+
+    .exp-track {
+      gap: 28px;
+      transition: none; /* transform is set every frame from scroll-controller.js — no CSS transition fighting it */
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .exp-card,
     .exp-card-image {
@@ -136,6 +153,16 @@ const cards = [
     }
     .exp-card:hover .exp-card-image {
       transform: none;
+    }
+
+    @media (min-width: 768px) {
+      .exp-scroller {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+      }
+      .exp-card {
+        scroll-snap-align: start;
+      }
     }
   }
 </style>

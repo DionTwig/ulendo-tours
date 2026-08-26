@@ -1,46 +1,8 @@
-const nav = document.querySelector("[data-nav]");
+// Nav hide/show and the scroll progress bar now live in scroll-controller.js,
+// which owns the page's single shared scroll listener. This file only handles
+// the mobile menu's own (non-scroll) interactions.
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const mobileMenu = document.querySelector("[data-mobile-menu]");
-const progressBar = document.querySelector("[data-scroll-progress]");
-
-if (nav || progressBar) {
-  let lastScrollY = window.scrollY;
-  let ticking = false;
-
-  function updateNav() {
-    const currentScrollY = window.scrollY;
-
-    if (nav) {
-      if (currentScrollY < 80) {
-        nav.classList.remove("nav-hidden");
-      } else if (currentScrollY > lastScrollY) {
-        nav.classList.add("nav-hidden");
-      } else {
-        nav.classList.remove("nav-hidden");
-      }
-    }
-
-    if (progressBar) {
-      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = scrollable > 0 ? Math.min(Math.max(currentScrollY / scrollable, 0), 1) : 0;
-      progressBar.style.transform = `scaleX(${progress})`;
-    }
-
-    lastScrollY = currentScrollY;
-    ticking = false;
-  }
-
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateNav);
-        ticking = true;
-      }
-    },
-    { passive: true }
-  );
-}
 
 if (menuToggle && mobileMenu) {
   menuToggle.addEventListener("click", () => {
