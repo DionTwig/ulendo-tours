@@ -14,7 +14,7 @@ const bullets = [
     <div
       data-reveal
       data-reveal-from="scale"
-      class="reveal relative h-[560px] overflow-hidden rounded-card md:h-[480px]"
+      class="reveal relative h-[620px] overflow-hidden rounded-card md:h-[480px]"
     >
       <ResponsiveImage
         src="/images/stays"
@@ -25,14 +25,17 @@ const bullets = [
         loading="lazy"
         drift
       />
-      <div class="stays-scrim absolute inset-0" aria-hidden="true"></div>
 
-      <div class="absolute inset-0 flex items-end p-6 sm:p-8 md:items-center md:p-0 md:pl-16">
-        <div class="max-w-md">
+      <div class="absolute inset-0 flex items-end justify-center p-5 md:items-center md:justify-start md:p-0 md:pl-16">
+        <div class="frost-panel w-full md:w-auto md:max-w-[440px]">
           <p class="eyebrow">Stay</p>
           <h2 id="stays-heading" class="mt-4 text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop">
             Sleep somewhere <span class="accent-italic">worth the photo.</span>
           </h2>
+          <p class="mt-4 text-sm leading-[1.6] text-green-700/90">
+            Apartments, villas, lodges and beach houses secured below public listing prices. We match the stay to
+            the trip — tell us the vibe and the budget.
+          </p>
           <ul class="mt-6 flex flex-col gap-3">
             {
               bullets.map((bullet) => (
@@ -56,25 +59,3 @@ const bullets = [
     </div>
   </div>
 </section>
-
-<style>
-  .stays-scrim {
-    background: linear-gradient(
-      to top,
-      rgba(239, 245, 207, 0.97) 0%,
-      rgba(239, 245, 207, 0.9) 44%,
-      rgba(239, 245, 207, 0.1) 100%
-    );
-  }
-
-  @media (min-width: 768px) {
-    .stays-scrim {
-      background: linear-gradient(
-        to right,
-        rgba(239, 245, 207, 0.97) 0%,
-        rgba(239, 245, 207, 0.9) 44%,
-        rgba(239, 245, 207, 0.05) 100%
-      );
-    }
-  }
-</style>

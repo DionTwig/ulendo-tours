@@ -41,18 +41,26 @@ const cards = [
 ];
 ---
 
-<section id="experiences" aria-labelledby="experiences-heading" class="flex h-full flex-col justify-center bg-white py-20 md:py-0">
+<section
+  id="experiences"
+  aria-labelledby="experiences-heading"
+  class="exp-section flex h-full flex-col justify-center py-20 md:py-0"
+>
   <div class="mx-auto w-full max-w-content px-5 md:px-gutter">
     <p data-reveal class="reveal eyebrow">Experiences</p>
     <h2
       id="experiences-heading"
       data-reveal
-      class="reveal mt-4 max-w-2xl text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop"
+      class="reveal mt-4 max-w-2xl text-h2-mobile text-cream-100 tracking-tight md:text-h2-desktop"
     >
-      The trip is the easy part.<br /><span class="accent-italic">The experience is what we craft.</span>
+      The trip is the easy part.<br />The experience is what we <span class="accent-italic">craft.</span>
     </h2>
+    <p data-reveal class="reveal mt-4 max-w-2xl text-sm text-cream-100/75 md:text-base">
+      Anyone can find you a flight. What we do is design the days around it — the places, the timing, the pace.
+      Starting in South Africa, expanding across Africa.
+    </p>
 
-    <div class="mt-8 hidden h-1 w-full overflow-hidden rounded-full bg-green-900/10 md:block" role="presentation">
+    <div class="mt-8 hidden h-1 w-full overflow-hidden rounded-full bg-cream-100/15 md:block" role="presentation">
       <div data-experiences-progress-fill class="h-full w-full origin-left scale-x-0 bg-orange-500"></div>
     </div>
 
@@ -60,24 +68,23 @@ const cards = [
       <div data-experiences-track class="exp-track">
         {
           cards.map((card) => (
-            <a
-              href={whatsapp("experiences")}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="exp-card group"
-            >
-              <div class="overflow-hidden rounded-card">
-                <ResponsiveImage
-                  src={card.image}
-                  alt={card.alt}
-                  width={640}
-                  height={480}
-                  class="exp-card-image aspect-[4/3] w-full object-cover"
-                  loading="lazy"
-                />
+            <a href={whatsapp("experiences")} target="_blank" rel="noopener noreferrer" class="exp-card group block">
+              <div class="relative">
+                <div class="overflow-hidden">
+                  <ResponsiveImage
+                    src={card.image}
+                    alt={card.alt}
+                    width={640}
+                    height={480}
+                    class="exp-card-image aspect-[4/3] w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <h3 class="exp-pill absolute bottom-0 left-5 z-10 translate-y-1/2">{card.title}</h3>
               </div>
-              <h3 class="mt-4 text-h3-mobile text-green-900 md:text-h3-desktop">{card.title}</h3>
-              <p class="mt-1.5 text-sm text-green-700/75">{card.body}</p>
+              <div class="exp-card-body px-5 pb-5">
+                <p class="text-sm text-green-700/90">{card.body}</p>
+              </div>
             </a>
           ))
         }
@@ -87,6 +94,10 @@ const cards = [
 </section>
 
 <style>
+  .exp-section {
+    background: linear-gradient(180deg, #0a3a31 0%, #0e574a 100%);
+  }
+
   .exp-scroller {
     overflow-x: auto;
     overflow-y: hidden;
@@ -106,10 +117,12 @@ const cards = [
   }
 
   .exp-card {
-    display: block;
     flex: 0 0 78vw;
     max-width: 340px;
     scroll-snap-align: start;
+    background-color: #eff5cf;
+    border-radius: 28px;
+    overflow: hidden;
     transition: transform 500ms ease-out;
   }
 
@@ -124,6 +137,24 @@ const cards = [
 
   .exp-card:hover .exp-card-image {
     transform: scale(1.05);
+  }
+
+  .exp-pill {
+    background-color: #f15c22;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.2;
+    padding: 10px 18px;
+    border-radius: 999px;
+    box-shadow: 0 4px 14px rgba(10, 58, 49, 0.25);
+    white-space: nowrap;
+  }
+
+  /* The pill straddles the image/body seam — reserve its full height plus
+     12px above the body copy so it can never sit over the first line of text. */
+  .exp-card-body p {
+    padding-top: 50px;
   }
 
   @media (min-width: 768px) {

@@ -52,10 +52,10 @@ import { whatsapp } from "../config/links";
 
       <div
         data-hero-anim
-        class="anim-item delay-3 mt-8 inline-flex items-center gap-2.5 rounded-pill bg-cream-100/90 px-5 py-3 text-sm font-semibold text-green-900 backdrop-blur-sm"
+        class="hero-trust-panel anim-item delay-3 mt-8 w-full max-w-[560px] rounded-card px-6 py-5 md:px-8 md:py-6"
       >
-        <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" aria-hidden="true"></span>
-        Save up to 40% on flights, stay and experiences
+        <p class="text-lg font-bold leading-tight text-green-900 md:text-[22px]">Save up to 40%</p>
+        <p class="mt-0.5 text-[13px] text-green-700/75 md:text-sm">on flights, stay and experiences</p>
       </div>
     </div>
   </div>
@@ -72,6 +72,19 @@ import { whatsapp } from "../config/links";
   @media (min-width: 1024px) {
     .hero-image {
       object-position: center;
+    }
+  }
+
+  .hero-trust-panel {
+    background: rgba(239, 245, 207, 0.97);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .hero-trust-panel {
+      background: rgba(239, 245, 207, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
     }
   }
 
