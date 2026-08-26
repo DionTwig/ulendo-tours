@@ -103,30 +103,34 @@
   }
 
   /*
-   * Frosted glass panel used over full-bleed section images (Flights, Stay).
-   * Fallback-first: the default IS the no-backdrop-filter-support case (a
-   * solid-enough background to read on its own), and @supports layers the
-   * blur + lower opacity on top where the browser can actually render it.
+   * Frosted glass panel used over full-bleed section images (Flights, Stay,
+   * hero trust bar). Fallback-first: the opaque version is the default, and
+   * @supports layers the blur + lower opacity on top only where it actually
+   * renders — get this order backwards and unsupported browsers show
+   * unreadable text over a photo.
    */
-  .frost-panel {
-    background: rgba(239, 245, 207, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.45);
-    border-radius: 24px;
-    padding: 28px;
-    box-shadow: 0 20px 60px rgba(10, 58, 49, 0.18);
+  .glass-panel {
+    background: rgba(239, 245, 207, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 28px;
+    padding: 40px;
+    max-width: 460px;
+    box-shadow: 0 24px 70px rgba(10, 58, 49, 0.22);
   }
 
-  @media (min-width: 768px) {
-    .frost-panel {
-      padding: 40px;
+  @supports (backdrop-filter: blur(20px)) {
+    .glass-panel {
+      background: rgba(239, 245, 207, 0.78);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
     }
   }
 
-  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-    .frost-panel {
-      background: rgba(239, 245, 207, 0.82);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+  @media (max-width: 767px) {
+    .glass-panel {
+      padding: 28px 24px;
+      max-width: 100%;
+      border-radius: 24px;
     }
   }
 

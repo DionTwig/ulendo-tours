@@ -49,13 +49,20 @@ import { whatsapp } from "../config/links";
         </a>
         <a href="#how-it-works" data-hero-anim class="anim-item delay-2 btn-secondary press">See What We Do</a>
       </div>
+    </div>
 
-      <div
-        data-hero-anim
-        class="hero-trust-panel anim-item delay-3 mt-8 w-full max-w-[560px] rounded-card px-6 py-5 md:px-8 md:py-6"
-      >
-        <p class="text-lg font-bold leading-tight text-green-900 md:text-[22px]">Save up to 40%</p>
-        <p class="mt-0.5 text-[13px] text-green-700/75 md:text-sm">on flights, stay and experiences</p>
+    <div data-hero-anim class="anim-item delay-3 mt-12 flex w-full justify-center">
+      <div class="glass-panel trust-panel">
+        <div class="grid grid-cols-2 divide-x divide-green-900/12">
+          <div class="px-6 text-center first:pl-0">
+            <p class="text-lg font-bold text-green-900 md:text-2xl">Save up to 40%</p>
+            <p class="mt-1 text-xs text-green-700 md:text-sm">on flights, stay and experiences</p>
+          </div>
+          <div class="px-6 text-center last:pr-0">
+            <p class="text-lg font-bold text-green-900 md:text-2xl">WhatsApp</p>
+            <p class="mt-1 text-xs text-green-700 md:text-sm">no forms, no portals</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -75,16 +82,17 @@ import { whatsapp } from "../config/links";
     }
   }
 
-  .hero-trust-panel {
-    background: rgba(239, 245, 207, 0.97);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+  .trust-panel {
+    max-width: 620px;
+    width: 100%;
+    padding: 24px 20px;
+    border-radius: 24px;
   }
 
-  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-    .hero-trust-panel {
-      background: rgba(239, 245, 207, 0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+  @media (max-width: 767px) {
+    .trust-panel {
+      padding: 20px 12px;
+      border-radius: 20px;
     }
   }
 
