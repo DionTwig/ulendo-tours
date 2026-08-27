@@ -228,43 +228,4 @@
     }
   }
 
-  /* ---- Sticky section stack (Hero → About → Flights → Stay → Experiences) ---- */
-  @media (min-width: 768px) {
-    .stack-frame {
-      position: relative;
-      height: 130vh;
-    }
-
-    .stack-frame-last {
-      height: 260vh;
-    }
-
-    .stack-sticky {
-      position: sticky;
-      top: 0;
-      z-index: var(--stack-z, auto);
-      transform-origin: center top;
-      min-height: 100vh;
-    }
-
-    /* Experiences is a fixed 100vh "stage" for the horizontal pin — its content
-       is designed to fit, unlike the flow-height sections above it, so it's
-       safe to fix the height and clip rather than just set a minimum. */
-    .stack-frame-last .stack-sticky {
-      height: 100vh;
-      overflow: hidden;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .stack-frame {
-      height: auto !important;
-    }
-
-    .stack-sticky {
-      position: static !important;
-      transform: none !important;
-      opacity: 1 !important;
-    }
-  }
 }
