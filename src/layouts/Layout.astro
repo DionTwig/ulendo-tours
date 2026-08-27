@@ -89,6 +89,27 @@ const jsonLd = {
     <slot name="head" />
   </head>
   <body class="bg-white">
+    <div id="page-loader" aria-hidden="true">
+      <svg viewBox="0 0 39.2 34.98" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M23.86,34.98c-6.47,0-12.05-3.26-14.96-8.73l6.48-2.58c.43-.17.88-.26,1.34-.26,1.02,0,2,.44,2.68,1.2,1.58,1.78,3.62,2.93,5.92,3.34.74.12,1.41.12,2.07.12,3.46,0,6.88-1.46,10.17-4.35.14-.14.31-.19.59-.19.43,0,.94.39.94.88,0,.12-.04.27-.1.39-2.2,4.64-6.61,10.17-15.12,10.17Z"
+        ></path>
+        <path
+          d="M7.87,24.6l18.88-10.04.24-.12,1.5-.84.22-.09c.85-.78,1.32-1.81,1.32-2.89,0-.44-.12-.88-.25-1.3-.62-1.78-2.49-5.88-6.64-5.88-5.21,0-7.54,5.23-7.54,10.41,0,.79.12,1.77.24,2.71,0,.1.02.19.04.27.08.33.08.49.08.66,0,1.19-.69,2.22-1.79,2.69l-6.59,3.5c-1.03-2.24-1.03-4.7-1.03-6.18C6.54,7.68,14.15,0,23.86,0c8.78,0,12.97,4.62,14.94,8.5.17.35.28.74.28,1.05.12.34.12.55.12.84,0,1.45-.81,3.22-2.62,3.88l-1.01.36L0,28.77l7.87-4.17Z"
+        ></path>
+      </svg>
+    </div>
+    <script>
+      (function () {
+        const loader = document.getElementById("page-loader");
+        if (!loader) return;
+        window.addEventListener("load", () => {
+          loader.classList.add("is-loaded");
+          setTimeout(() => loader.remove(), 400);
+        });
+      })();
+    </script>
+    <noscript><style>#page-loader { display: none; }</style></noscript>
     <a
       href="#main"
       class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-orange-500 focus:text-white focus:px-4 focus:py-2 focus:rounded-pill"
