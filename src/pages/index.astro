@@ -12,33 +12,13 @@ import FinalCta from "../components/FinalCta.astro";
 ---
 
 <Layout>
-  <div class="stack-frame" style={{ "--stack-z": 10 }}>
-    <div class="stack-sticky">
-      <Hero />
-    </div>
-  </div>
-  <div class="stack-frame" style={{ "--stack-z": 20 }}>
-    <div class="stack-sticky">
-      <About />
-    </div>
-  </div>
-  <div class="stack-frame" style={{ "--stack-z": 30 }}>
-    <div class="stack-sticky">
-      <Flights />
-    </div>
-  </div>
-  <div class="stack-frame" style={{ "--stack-z": 40 }}>
-    <div class="stack-sticky">
-      <Stays />
-    </div>
-  </div>
-  <div class="stack-frame stack-frame-last" style={{ "--stack-z": 50 }}>
-    <div class="stack-sticky">
-      <Experiences />
-    </div>
-  </div>
-  <Nights />
+  <Hero />
+  <About />
   <Packages />
+  <Flights />
+  <Stays />
+  <Experiences />
+  <Nights />
   <HowItWorks />
   <FinalCta />
 </Layout>

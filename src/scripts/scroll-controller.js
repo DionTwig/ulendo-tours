@@ -2,8 +2,8 @@
  * Single shared scroll handler for the whole page. Everything that used to be
  * its own `addEventListener('scroll', ...)` (nav hide/show, the progress bar,
  * hero parallax) lives here now, alongside the new scroll-driven work (reveal
- * fallback, sticky-stack exit fade, Experiences horizontal pin) — one rAF tick
- * drives all of it so nothing fights over the frame budget.
+ * fallback, Experiences horizontal pin) — one rAF tick drives all of it so
+ * nothing fights over the frame budget.
  */
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const supportsScrollTimeline = CSS.supports("animation-timeline: view()");
@@ -12,8 +12,7 @@ const nav = document.querySelector("[data-nav]");
 const progressBar = document.querySelector("[data-scroll-progress]");
 const heroParallaxLayer = document.querySelector("[data-hero-parallax]");
 const hero = document.getElementById("hero");
-const stackFrames = Array.from(document.querySelectorAll(".stack-frame:not(.stack-frame-last)"));
-const experiencesFrame = document.querySelector(".stack-frame-last");
+const experiencesFrame = document.querySelector("[data-experiences-pin]");
 const experiencesTrack = document.querySelector("[data-experiences-track]");
 const experiencesProgressFill = document.querySelector("[data-experiences-progress-fill]");
 
@@ -70,20 +69,6 @@ function updateReveals() {
     const rect = el.getBoundingClientRect();
     const progress = clamp((viewportHeight * 0.95 - rect.top) / (viewportHeight * 0.55), 0, 1);
     applyRevealProgress(el, progress);
-  });
-}
-
-// ---- Sticky stack exit fade (Hero/About/Flights/Stay fade+scale as the next one covers them) ----
-function updateStack() {
-  if (prefersReducedMotion || window.innerWidth < 768) return;
-  stackFrames.forEach((frame) => {
-    const sticky = frame.querySelector(".stack-sticky");
-    if (!sticky) return;
-    const rect = frame.getBoundingClientRect();
-    const dwell = rect.height - window.innerHeight;
-    const progress = dwell > 0 ? clamp(-rect.top / dwell, 0, 1) : 0;
-    sticky.style.transform = `scale(${1 - 0.04 * progress})`;
-    sticky.style.opacity = String(1 - 0.25 * progress);
   });
 }
 
@@ -146,7 +131,6 @@ function onScrollTick() {
   updateNavAndProgress();
   updateHeroParallax();
   updateReveals();
-  updateStack();
   updateExperiences();
   ticking = false;
 }

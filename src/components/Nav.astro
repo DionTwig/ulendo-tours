@@ -1,12 +1,14 @@
 ---
 import { whatsapp } from "../config/links";
 
+// Prefixed with "/" so these work from any page, not just the homepage —
+// a bare "#about" only scrolls if that id already exists on the current page.
 const navLinks = [
-  { href: "#about", label: "About" },
-  { href: "#flights", label: "Flights" },
-  { href: "#stays", label: "Stay" },
-  { href: "#experiences", label: "Experiences" },
-  { href: "#nights", label: "Nightlife" },
+  { href: "/#about", label: "About" },
+  { href: "/#flights", label: "Flights" },
+  { href: "/#stays", label: "Stay" },
+  { href: "/#experiences", label: "Experiences" },
+  { href: "/#nights", label: "Nightlife" },
 ];
 ---
 
@@ -15,7 +17,7 @@ const navLinks = [
   class="fixed inset-x-0 top-8 z-50 mx-auto flex w-[calc(100%-40px)] max-w-content items-center justify-between rounded-pill px-4 py-3 transition-transform duration-300 ease-smooth md:px-6 md:py-4"
   style="background-color: rgba(10, 58, 49, 0.55); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);"
 >
-  <a href="#main" class="flex items-center gap-2" aria-label="Ulendo Tours home">
+  <a href="/" class="flex items-center gap-2" aria-label="Ulendo Tours home">
     <img src="/brand/logo-cream.svg" alt="Ulendo Tours" class="h-10 w-auto md:h-12" width="174" height="65" />
   </a>
 

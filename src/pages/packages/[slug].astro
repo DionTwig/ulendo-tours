@@ -1,0 +1,38 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PackageDetail from "../../components/PackageDetail.astro";
+import packagesData from "../../data/packages.json";
+
+export function getStaticPaths() {
+  return packagesData.packages.map((pkg) => ({
+    params: { slug: pkg.slug },
+    props: { pkg },
+  }));
+}
+
+const { pkg } = Astro.props;
+const price = pkg.pricePerCoupleByOrigin.jnb;
+const priceFormatted = new Intl.NumberFormat("en-ZA", { maximumFractionDigits: 0 }).format(price);
+
+const ogImageBySlug: Record<string, string> = {
+  "cape-town": "/images/package-cape-town.jpg",
+  durban: "/images/durban.jpg",
+  zanzibar: "/images/zanzibar.jpg",
+  bilene: "/images/bilene.jpg",
+};
+---
+
+<Layout
+  title={`${pkg.name} Package | Ulendo Tours`}
+  description={`${pkg.heroSubtitle}. From R${priceFormatted} per couple, flights and stay included, pick any two experiences.`}
+  ogImagePath={ogImageBySlug[pkg.slug] ?? "/images/stays.jpg"}
+>
+  <PackageDetail
+    pkg={pkg}
+    origins={packagesData.origins}
+    travellerOptions={packagesData.travellerOptions}
+    instalmentTiers={packagesData.instalmentTiers}
+    whatsappNumber={packagesData.whatsappNumber}
+    currency={packagesData.currency}
+  />
+</Layout>

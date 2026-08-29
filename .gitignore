@@ -3,6 +3,7 @@ dist/
 ulendo-site.zip
 
 # local dev-tool config (browser preview), not part of the site
+.claude/
 public/.claude/
 
 # dependencies
@@ -17,6 +18,7 @@ node_modules/
 
 # payments — never commit real secrets or payment logs
 yoco-config.php
+yococonfig.php
 *.log
 npm-debug.log*
 
