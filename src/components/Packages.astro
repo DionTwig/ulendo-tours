@@ -1,88 +1,180 @@
 ---
 import ResponsiveImage from "./ResponsiveImage.astro";
-import { whatsapp } from "../config/links";
+import packagesData from "../data/packages.json";
+
+const { packages } = packagesData;
+
+const cardImageBySlug: Record<string, string> = {
+  "cape-town": "/images/package-cape-town",
+  durban: "/images/durban",
+  zanzibar: "/images/zanzibar",
+  bilene: "/images/bilene",
+};
+const fallbackImage = "/images/stays";
+
+const steps = [
+  {
+    number: "01",
+    title: "Choose your destination",
+    body: "Four cities. Prices shift with the airport you fly from.",
+  },
+  {
+    number: "02",
+    title: "Pick two experiences",
+    body: "Each package comes with a shortlist of five. You choose two.",
+  },
+  {
+    number: "03",
+    title: "Flexible payments",
+    body: "Secure your seats with a deposit, then settle the balance in monthly instalments.",
+  },
+];
 ---
 
-<section id="packages" aria-labelledby="packages-heading" class="bg-cream-100 py-20 md:py-28">
-  <div class="mx-auto max-w-content px-5 md:px-gutter">
-    <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-      <div>
-        <p data-reveal class="reveal eyebrow">Packages</p>
-        <h2
-          id="packages-heading"
-          data-reveal
-          class="reveal mt-4 max-w-2xl text-h2-mobile text-green-900 tracking-tight md:text-h2-desktop"
-        >
-          Already built.<br /><span class="accent-italic">Just pack a bag.</span>
-        </h2>
-      </div>
-      <p data-reveal class="reveal max-w-xs text-sm text-green-700/80 md:text-base">
-        Fixed itineraries we've already priced and tested. Flights, stay and the days in between
-      </p>
+<section id="packages" aria-labelledby="packages-heading" class="pkg-scope">
+  <!-- Billboard -->
+  <div class="relative overflow-hidden bg-[var(--green-900)] py-20 md:py-28">
+    <div class="absolute inset-0">
+      <ResponsiveImage
+        src="/images/flights"
+        alt=""
+        width={1800}
+        height={1005}
+        class="h-full w-full object-cover opacity-50"
+        loading="lazy"
+      />
+      <div class="pkg-billboard-scrim absolute inset-0" aria-hidden="true"></div>
     </div>
 
-    <div
-      data-reveal
-      data-reveal-from="scale"
-      class="reveal relative mt-12 h-[520px] overflow-hidden rounded-card md:mt-16 md:h-[440px]"
-    >
-      <ResponsiveImage
-        src="/images/package-cape-town"
-        alt="Aerial panoramic view of Cape Town at golden hour, with the V&A Waterfront harbour, Cape Town Stadium and city bowl below Table Mountain, featured in the Cape Town Long Weekend package"
-        width={864}
-        height={355}
-        class="absolute inset-0 h-full w-full object-cover"
-        loading="lazy"
-        drift
-      />
-      <div class="billboard-scrim absolute inset-0" aria-hidden="true"></div>
+    <div class="relative z-10 mx-auto max-w-content px-5 text-center md:px-gutter">
+      <span
+        class="inline-flex items-center rounded-[100px] bg-[var(--orange-500)] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.10em] text-white"
+      >
+        Limited-Time Launch Packages
+      </span>
+      <h2
+        id="packages-heading"
+        class="mx-auto mt-5 max-w-2xl text-[46px] font-bold leading-[1.05] tracking-[-0.03em] text-[var(--cream-100)] md:text-[64px]"
+      >
+        Return flights, your stay, and two experiences you pick.
+      </h2>
+      <p class="mx-auto mt-4 max-w-lg text-[15px] leading-[1.55] text-[var(--cream-100)]/80 md:text-[16px]">
+        Four destinations, priced per couple. Departing Johannesburg, Cape Town, Durban and Gqeberha.
+      </p>
 
-      <div class="absolute inset-0 flex items-end p-8 md:items-center md:p-0 md:pl-16">
-        <div class="max-w-md">
-          <span class="inline-flex items-center rounded-pill bg-orange-500 px-4 py-1.5 text-[11px] font-semibold uppercase text-white">
-            Most Booked
-          </span>
-          <h3 class="mt-4 text-[30px] font-bold leading-[1.05] tracking-tight text-cream-100 md:text-[44px]">
-            Cape Town Long Weekend
-          </h3>
-          <p class="mt-3 text-sm text-cream-100/80 md:text-base">
-            4 days &middot; Return flights &middot; Sea Point apartment &middot; Table Mountain, Cape Point &amp; a winelands day
-          </p>
-
-          <div class="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-7">
-            <div>
-              <p class="text-[11px] font-semibold uppercase text-cream-100/60" style="letter-spacing: 1.6px;">From</p>
-              <p class="text-2xl font-bold text-cream-100 md:text-[28px]">R10 500 per couple</p>
+      <div
+        class="mx-auto mt-10 grid max-w-3xl grid-cols-1 divide-y divide-[var(--cream-100)]/15 text-left md:grid-cols-3 md:divide-x md:divide-y-0"
+      >
+        {
+          steps.map((step) => (
+            <div class="py-5 first:pt-0 last:pb-0 md:px-7 md:py-0 md:first:pl-0 md:last:pr-0">
+              <p class="text-[11px] font-semibold uppercase tracking-[0.10em] text-[var(--orange-500)]">
+                {step.number}
+              </p>
+              <p class="mt-1.5 text-[15px] font-semibold text-[var(--cream-100)] md:text-[16px]">{step.title}</p>
+              <p class="mt-1.5 text-sm leading-[1.55] text-[var(--cream-100)]/70">{step.body}</p>
             </div>
-            <a href={whatsapp("packages")} target="_blank" rel="noopener noreferrer" class="btn-primary press">
-              Book This Trip
-            </a>
-          </div>
-          <p class="mt-3 text-xs text-cream-100/50">Placeholder pricing — to be confirmed by Ulendo before launch.</p>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Catalog -->
+  <div class="bg-[var(--blue-100)] px-5 py-16 md:px-gutter md:py-24">
+    <div class="mx-auto max-w-content">
+      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="block text-[11px] font-semibold uppercase tracking-[0.10em] text-[var(--orange-500)] md:text-[13px]">
+            The Packages
+          </p>
+          <h3 class="mt-4 max-w-2xl text-h2-mobile tracking-[-0.03em] text-[var(--ink-900)] md:text-h2-desktop">
+            Four trips, just pick one.
+          </h3>
         </div>
+        <p class="max-w-xs text-[15px] leading-[1.55] text-[var(--ink-500)] md:text-[16px]">
+          Prices shown are per couple flying from Johannesburg. Other departure cities are priced at checkout.
+        </p>
+      </div>
+
+      <div class="mt-12 grid grid-cols-1 items-stretch gap-6 md:mt-16 md:grid-cols-2 min-[1200px]:grid-cols-4">
+        {
+          packages.map((pkg) => {
+            const price = pkg.pricePerCoupleByOrigin.jnb;
+            const priceFormatted = new Intl.NumberFormat("en-ZA", { maximumFractionDigits: 0 }).format(price);
+            return (
+              <a
+                href={`/packages/${pkg.slug}`}
+                class="pkg-card group flex flex-col overflow-hidden rounded-[24px] border border-[var(--green-050)] bg-white transition-transform duration-300 hover:-translate-y-1"
+              >
+                <div class="relative aspect-[16/10] w-full overflow-hidden">
+                  <ResponsiveImage
+                    src={cardImageBySlug[pkg.slug] ?? fallbackImage}
+                    alt={`${pkg.name}, ${pkg.area}`}
+                    width={640}
+                    height={400}
+                    class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <span class="absolute left-4 top-4 rounded-[100px] bg-[var(--green-900)] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.10em] text-[var(--cream-100)]">
+                    {pkg.nights} Nights
+                  </span>
+                </div>
+
+                <div class="flex flex-1 flex-col p-6">
+                  <h4 class="text-[20px] font-bold tracking-[-0.03em] text-[var(--ink-900)]">{pkg.name}</h4>
+                  <p class="mt-1 text-sm text-[var(--ink-500)]">{pkg.cardSubtitle}</p>
+
+                  <ul class="mt-4 flex flex-col gap-2">
+                    {pkg.includes.slice(0, 3).map((item) => (
+                      <li class="flex items-start gap-2.5 text-sm text-[var(--ink-500)]">
+                        <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--green-900)]" aria-hidden="true" />
+                        <span>{item.title}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div class="mt-auto pt-6">
+                    <div class="flex items-baseline gap-2 border-t border-[var(--green-050)] pt-4">
+                      <span class="text-[11px] font-semibold uppercase tracking-[0.10em] text-[var(--ink-500)]">
+                        From
+                      </span>
+                      <span class="text-[22px] font-bold tracking-[-0.03em] text-[var(--green-900)]">
+                        R{priceFormatted}
+                      </span>
+                      <span class="text-sm text-[var(--ink-500)]">per couple</span>
+                    </div>
+                    <span class="btn mt-4 w-full bg-[var(--green-900)] text-white transition-colors group-hover:bg-[var(--orange-500)]">
+                      View Package
+                    </span>
+                  </div>
+                </div>
+              </a>
+            );
+          })
+        }
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  .billboard-scrim {
+  .pkg-billboard-scrim {
     background: linear-gradient(
       to top,
-      rgba(10, 58, 49, 0.92) 0%,
-      rgba(10, 58, 49, 0.5) 44%,
-      rgba(10, 58, 49, 0.1) 100%
+      rgba(14, 87, 74, 0.95) 0%,
+      rgba(14, 87, 74, 0.75) 55%,
+      rgba(14, 87, 74, 0.55) 100%
     );
   }
 
-  @media (min-width: 768px) {
-    .billboard-scrim {
-      background: linear-gradient(
-        to right,
-        rgba(10, 58, 49, 0.92) 0%,
-        rgba(10, 58, 49, 0.5) 55%,
-        rgba(10, 58, 49, 0.1) 100%
-      );
+  @media (prefers-reduced-motion: reduce) {
+    .pkg-card,
+    .pkg-card * {
+      transition: none !important;
+    }
+    .pkg-card:hover {
+      transform: none !important;
     }
   }
 </style>

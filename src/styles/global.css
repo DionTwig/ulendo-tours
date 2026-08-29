@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Packages/detail-page design tokens (Figma "Ulendo / Colour" collection).
+   Scoped to .pkg-scope, not :root — these names overlap the Tailwind theme
+   colors of the same name but map to different hex values, so they must
+   never leak outside the packages system. */
+.pkg-scope {
+  --green-900: #0e574a;
+  --green-700: #14705f;
+  --green-050: #d7e3df;
+  --orange-500: #f15c22;
+  --cream-100: #eff5cf;
+  --blue-100: #e4f0f3;
+  --ink-900: #0b1f1a;
+  --ink-500: #5a6b66;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

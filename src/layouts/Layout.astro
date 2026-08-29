@@ -12,16 +12,18 @@ interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  ogImagePath?: string;
 }
 
 const {
   title = "Ulendo Tours | Curated Southern Africa Travel, Johannesburg",
   description = "Ulendo Tours curates flights, stays and experiences across Southern Africa — up to 40% off, planned over WhatsApp with a Johannesburg-based team. No booking engine, just people who build the trip with you.",
   noindex = false,
+  ogImagePath = "/images/hero.jpg",
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL("/images/hero.jpg", Astro.site);
+const ogImage = new URL(ogImagePath, Astro.site);
 
 const jsonLd = {
   "@context": "https://schema.org",

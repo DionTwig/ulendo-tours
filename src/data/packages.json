@@ -1,0 +1,162 @@
+{
+  "_comment": "Single source of truth for Ulendo package pricing and content. Nothing in the markup should hardcode a price — read it from here so the site and the Figma file never drift apart.",
+  "currency": "ZAR",
+  "whatsappNumber": "27799569295",
+  "_whatsappNote": "International format, digits only, no + or spaces. Matches links.ts's whatsapp.base number.",
+
+  "origins": [
+    { "id": "jnb", "label": "Johannesburg (O.R. Tambo)" },
+    { "id": "cpt", "label": "Cape Town" },
+    { "id": "dur", "label": "Durban (King Shaka)" },
+    { "id": "plz", "label": "Gqeberha" }
+  ],
+
+  "_travellerPricingNote": "Base price is per couple (2 people). Each individual added beyond 2 is charged at half the couple price, less a 10% discount, via count on each option below — not fixed couple multiples.",
+  "travellerOptions": [
+    { "id": "2", "label": "2 people", "count": 2 },
+    { "id": "3", "label": "3 people", "count": 3 },
+    { "id": "4", "label": "4 people", "count": 4 },
+    { "id": "5", "label": "5 people", "count": 5 },
+    { "id": "6", "label": "6 people", "count": 6 },
+    { "id": "7", "label": "7 people", "count": 7 },
+    { "id": "8", "label": "8 people", "count": 8 },
+    { "id": "other", "label": "More than 8 — we'll quote you", "count": null }
+  ],
+
+  "instalmentTiers": [
+    { "minDaysBeforeDeparture": 90, "depositFraction": 0.35, "instalments": 3, "label": "90+ days out" },
+    { "minDaysBeforeDeparture": 60, "depositFraction": 0.30, "instalments": 2, "label": "60–89 days out" },
+    { "minDaysBeforeDeparture": 30, "depositFraction": 0.50, "instalments": 1, "label": "30–59 days out" },
+    { "minDaysBeforeDeparture": 0,  "depositFraction": 1.00, "instalments": 0, "label": "Under 30 days" }
+  ],
+
+  "packages": [
+    {
+      "id": "durban",
+      "slug": "durban",
+      "name": "Durban",
+      "region": "South Africa",
+      "area": "Umhlanga Rocks",
+      "nights": 2,
+      "extendable": true,
+      "finalPaymentDaysBefore": 30,
+      "cardSubtitle": "Umhlanga · 2 nights",
+      "heroSubtitle": "Umhlanga Rocks · 2 nights · Return flights for two",
+      "includes": [
+        { "title": "Return flights", "body": "Direct, 1h05m from JHB. Checked bag included." },
+        { "title": "2 nights, Umhlanga", "body": "Beachfront room for two, breakfast daily." },
+        { "title": "Airport transfers", "body": "King Shaka airport to hotel and back." },
+        { "title": "Two experiences", "body": "Chosen by you from the five below." }
+      ],
+      "stay": {
+        "heading": "Two nights in Umhlanga",
+        "body": "Umhlanga is Durban's beachfront north of the city: a walkable promenade, the lighthouse, and Indian Ocean water warm enough to swim year-round. The restaurant strip and Gateway are ten minutes inland.",
+        "tags": ["Beachfront room", "Daily breakfast", "Promenade walk", "Warm-water swimming", "10 min to Gateway"]
+      },
+      "experiences": [
+        { "id": "inanda", "name": "Inanda Heritage Route", "duration": "Half day", "description": "Ohlange, the Gandhi settlement and Shembe — the route most visitors never see." },
+        { "id": "harbour-cruise", "name": "Deep-sea harbour cruise", "duration": "2 hours", "description": "Out past the harbour mouth with the skyline and the stadium arch behind you." },
+        { "id": "ushaka", "name": "uShaka Marine World", "duration": "Full day", "description": "Aquarium, dolphin stadium and the Wet 'n Wild slides on one ticket." },
+        { "id": "thousand-hills", "name": "Valley of a Thousand Hills", "duration": "Half day", "description": "Zulu cultural village and the escarpment views inland from the city." },
+        { "id": "tala", "name": "Tala Game Reserve safari", "duration": "Full day", "description": "Rhino, giraffe and hippo about an hour from the beach." }
+      ],
+      "pricePerCoupleByOrigin": { "jnb": 7200, "dur": 5550, "cpt": 8400, "plz": 8650 },
+      "originNotes": { "dur": "No flights — stay and experiences only" }
+    },
+    {
+      "id": "cape-town",
+      "slug": "cape-town",
+      "name": "Cape Town",
+      "region": "South Africa",
+      "area": "Sea Point",
+      "nights": 2,
+      "extendable": true,
+      "finalPaymentDaysBefore": 30,
+      "cardSubtitle": "Sea Point · 2 nights",
+      "heroSubtitle": "Sea Point · 2 nights · Return flights for two",
+      "includes": [
+        { "title": "Return flights", "body": "Direct, 2h10m from JHB. Checked bag included." },
+        { "title": "2 nights, Sea Point", "body": "City-and-sea room for two, breakfast daily." },
+        { "title": "Airport transfers", "body": "Cape Town airport to hotel and back." },
+        { "title": "Two experiences", "body": "Chosen by you from the five below." }
+      ],
+      "stay": {
+        "heading": "Two nights in Sea Point",
+        "body": "Sea Point puts you on the Atlantic promenade with Signal Hill at your back and the city bowl ten minutes away. Table Mountain, the Waterfront and Camps Bay are all a short drive.",
+        "tags": ["Sea-facing room", "Daily breakfast", "Atlantic promenade", "10 min to city bowl", "Sunset side"]
+      },
+      "experiences": [
+        { "id": "table-mountain", "name": "Table Mountain, Penguins & Cape Point", "duration": "Full day", "description": "Cableway up the mountain, the Boulders penguins, then the Cape of Good Hope." },
+        { "id": "wine-tram", "name": "Franschhoek Wine Tram", "duration": "Full day", "description": "Hop-on hop-off between the valley estates by tram and open-top bus." },
+        { "id": "robben-island", "name": "Robben Island", "duration": "Half day", "description": "Ferry from the Waterfront and a tour led by former political prisoners." },
+        { "id": "shark-cage", "name": "Shark cage diving, Gansbaai", "duration": "Full day", "description": "Two hours down the coast to the cage. Not for everyone." },
+        { "id": "hop-on-hop-off", "name": "Hop-on hop-off city tour", "duration": "Flexible", "description": "Open-top bus across the city bowl, Camps Bay and the winelands loop." }
+      ],
+      "pricePerCoupleByOrigin": { "jnb": 10500, "cpt": 7850, "dur": 10700, "plz": 10300 },
+      "originNotes": { "cpt": "No flights — stay and experiences only" }
+    },
+    {
+      "id": "zanzibar",
+      "slug": "zanzibar",
+      "name": "Zanzibar",
+      "region": "Tanzania",
+      "area": "Kendwa",
+      "nights": 4,
+      "extendable": true,
+      "finalPaymentDaysBefore": 45,
+      "cardSubtitle": "Kendwa · 4 nights",
+      "heroSubtitle": "Kendwa beach · 4 nights · Return flights for two",
+      "includes": [
+        { "title": "Return flights", "body": "Direct, 3h35m from JHB. Checked bag included." },
+        { "title": "4 nights, Kendwa", "body": "Beachfront room for two, breakfast daily." },
+        { "title": "Airport transfers", "body": "Zanzibar airport to resort and back." },
+        { "title": "Two experiences", "body": "Chosen by you from the five below." }
+      ],
+      "stay": {
+        "heading": "Four nights on Kendwa beach",
+        "body": "Kendwa faces west, so it keeps deep swimmable water through the tide and gets the best sunsets on the island — without the hustle of neighbouring Nungwi. Your room is beachfront with breakfast daily.",
+        "tags": ["Beachfront room", "Daily breakfast", "Pool", "Swimmable at all tides", "Sunset side"]
+      },
+      "experiences": [
+        { "id": "stone-town", "name": "Stone Town & Prison Island", "duration": "Half day", "description": "UNESCO alleyways, the old slave market, then giant tortoises across the water." },
+        { "id": "safari-blue", "name": "Safari Blue sandbank day", "duration": "Full day", "description": "Dhow out to the sandbank, snorkelling, grilled seafood lunch on the sand." },
+        { "id": "spice-farm", "name": "Spice farm tour", "duration": "Half day", "description": "Cinnamon, cloves and vanilla straight off the tree, with a farm lunch." },
+        { "id": "nakupenda", "name": "Nakupenda snorkelling", "duration": "Half day", "description": "Mnemba reef, then a sandbar that only exists at low tide." },
+        { "id": "jozani", "name": "Jozani Forest & The Rock", "duration": "Half day", "description": "Red colobus monkeys, then lunch at the restaurant in the sea." }
+      ],
+      "pricePerCoupleByOrigin": { "jnb": 19700, "dur": 21350, "cpt": 21900, "plz": 21900 },
+      "originNotes": {}
+    },
+    {
+      "id": "bilene",
+      "slug": "bilene",
+      "name": "Bilene",
+      "region": "Mozambique",
+      "area": "San Martinho Beach Club",
+      "nights": 4,
+      "extendable": true,
+      "finalPaymentDaysBefore": 45,
+      "cardSubtitle": "Bilene · 4 nights",
+      "heroSubtitle": "San Martinho Beach Club · 4 nights · Return flights for two",
+      "includes": [
+        { "title": "Return flights", "body": "Direct to Maputo, 1h20m from JHB. Checked bag included." },
+        { "title": "4 nights, Bilene", "body": "Lagoon-side apartment for two at San Martinho." },
+        { "title": "Road transfers", "body": "Maputo airport to Bilene and back, about 3h20m each way." },
+        { "title": "Two experiences", "body": "Chosen by you from the three below." }
+      ],
+      "stay": {
+        "heading": "Four nights on Bilene lagoon",
+        "body": "San Martinho sits on Mozambique's largest lagoon, held off the ocean by a dune barrier — so the water stays warm, calm and shallow enough to wade a long way out. Self-catering apartments and villas, some with private splash pools.",
+        "tags": ["Lagoon-side apartment", "Self-catering", "Private splash pool", "Calm shallow water", "Watersports on site"]
+      },
+      "experiences": [
+        { "id": "lagoon-cruise", "name": "Lagoon cruise to the sandbar", "duration": "Half day", "description": "Boat across the lagoon to the sand spit, with time to swim and snorkel." },
+        { "id": "maputo-city", "name": "Maputo city tour", "duration": "Full day", "description": "The Samora Machel statue, the fish market and the Katembe bridge." },
+        { "id": "jetski-quad", "name": "Jet ski or quad bikes", "duration": "1 hour", "description": "Booked at the resort activity desk — lagoon water or dune trails." }
+      ],
+      "pricePerCoupleByOrigin": { "jnb": 24700, "dur": 26550, "cpt": 27100, "plz": 27100 },
+      "originNotes": {},
+      "_note": "Only three experiences here — the other two were unverified. Picker still requires exactly two, so the customer chooses two of three."
+    }
+  ]
+}

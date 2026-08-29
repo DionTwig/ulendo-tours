@@ -1,0 +1,531 @@
+---
+import ResponsiveImage from "./ResponsiveImage.astro";
+
+interface Origin {
+  id: string;
+  label: string;
+}
+interface TravellerOption {
+  id: string;
+  label: string;
+  multiplier: number | null;
+}
+interface InstalmentTier {
+  minDaysBeforeDeparture: number;
+  depositFraction: number;
+  instalments: number;
+  label: string;
+}
+
+interface Props {
+  pkg: any;
+  origins: Origin[];
+  travellerOptions: TravellerOption[];
+  instalmentTiers: InstalmentTier[];
+  whatsappNumber: string;
+  currency: string;
+}
+
+const { pkg, origins, travellerOptions, instalmentTiers, whatsappNumber, currency } = Astro.props;
+
+const heroImageBySlug: Record<string, string> = {
+  "cape-town": "/images/package-cape-town",
+  durban: "/images/durban",
+  zanzibar: "/images/zanzibar",
+  bilene: "/images/bilene",
+};
+const heroImage = heroImageBySlug[pkg.slug] ?? "/images/stays";
+
+// Only Durban and Cape Town have a dedicated "stay" photo distinct from the
+// hero/card shot — the others fall back to reusing the hero image.
+const stayImageBySlug: Record<string, string> = {
+  "cape-town": "/images/cape-town-stay",
+  durban: "/images/durban-stay",
+};
+const stayImage = stayImageBySlug[pkg.slug] ?? heroImage;
+
+const fmt = (n: number) => new Intl.NumberFormat("en-ZA", { maximumFractionDigits: 0 }).format(n);
+const heroPrice = fmt(pkg.pricePerCoupleByOrigin.jnb);
+const topTier = instalmentTiers[0];
+
+// Fixed launch window, not a rolling 12 months — these are the limited-time
+// launch packages advertised in the billboard, not a year-round offer.
+const months = [
+  { value: "2026-09", label: "September 2026" },
+  { value: "2026-10", label: "October 2026" },
+  { value: "2026-11", label: "November 2026" },
+  { value: "2026-12", label: "December 2026" },
+  { value: "2027-01", label: "January 2027" },
+];
+
+const clientData = {
+  packageId: pkg.id,
+  packageName: pkg.name,
+  nights: pkg.nights,
+  pricePerCoupleByOrigin: pkg.pricePerCoupleByOrigin,
+  originNotes: pkg.originNotes,
+  origins,
+  travellerOptions,
+  instalmentTiers,
+  finalPaymentDaysBefore: pkg.finalPaymentDaysBefore,
+  whatsappNumber,
+  currency,
+};
+---
+
+<div class="pkg-scope">
+  <!-- 1. Hero -->
+  <section
+    id="package-hero"
+    aria-labelledby="package-hero-heading"
+    class="pkg-hero relative flex h-[460px] items-end overflow-hidden md:h-[560px]"
+    style={`background-image:url(${heroImage}.jpg);`}
+  >
+    <div class="pkg-hero-scrim absolute inset-0" aria-hidden="true"></div>
+    <div class="relative z-10 mx-auto w-full max-w-content px-5 pb-10 md:px-gutter md:pb-16">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.10em] text-[var(--orange-500)] md:text-[13px]">
+        {pkg.region}
+      </p>
+      <h1
+        id="package-hero-heading"
+        class="mt-3 text-[46px] font-bold leading-[1.02] tracking-[-0.03em] text-[var(--cream-100)] md:text-[72px]"
+      >
+        {pkg.name}
+      </h1>
+      <p class="mt-3 max-w-lg text-[15px] leading-[1.55] text-[var(--cream-100)]/85 md:text-[16px]">
+        {pkg.heroSubtitle}
+      </p>
+      <span
+        class="mt-6 inline-flex items-baseline gap-1.5 rounded-[100px] bg-[var(--cream-100)] px-5 py-2.5 text-[var(--ink-900)]"
+      >
+        <span class="text-sm">From</span>
+        <span class="text-lg font-bold tracking-[-0.03em]">R{heroPrice}</span>
+        <span class="text-sm">/ per couple</span>
+      </span>
+    </div>
+  </section>
+
+  <!-- 2. What's included -->
+  <section aria-labelledby="included-heading" class="bg-white px-5 py-16 md:px-gutter md:py-24">
+    <div class="mx-auto max-w-content">
+      <h2
+        id="included-heading"
+        class="text-[28px] font-bold tracking-[-0.03em] text-[var(--ink-900)] md:text-[38px]"
+      >
+        What's included
+      </h2>
+      <div
+        class="mt-10 grid grid-cols-1 divide-y divide-[var(--green-050)] md:grid-cols-4 md:divide-y-0 md:gap-8 md:divide-x"
+      >
+        {
+          pkg.includes.map((item: { title: string; body: string }) => (
+            <div class="py-6 first:pt-0 md:px-6 md:py-0 md:first:pl-0">
+              <p class="text-[16px] font-semibold tracking-[-0.03em] text-[var(--ink-900)]">{item.title}</p>
+              <p class="mt-2 text-[15px] leading-[1.55] text-[var(--ink-500)]">{item.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Your stay -->
+  <section aria-labelledby="stay-heading" class="bg-[var(--blue-100)] px-5 py-16 md:px-gutter md:py-24">
+    <div class="mx-auto grid max-w-content grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-16">
+      <div class="overflow-hidden rounded-[24px]">
+        <ResponsiveImage
+          src={stayImage}
+          alt={`${pkg.stay.heading}, ${pkg.area}`}
+          width={720}
+          height={560}
+          class="aspect-[4/3] w-full object-cover"
+          loading="lazy"
+        />
+      </div>
+      <div>
+        <h2 id="stay-heading" class="text-[28px] font-bold tracking-[-0.03em] text-[var(--ink-900)] md:text-[38px]">
+          {pkg.stay.heading}
+        </h2>
+        <p class="mt-4 text-[15px] leading-[1.55] text-[var(--ink-500)] md:text-[16px]">{pkg.stay.body}</p>
+        <ul class="mt-6 flex flex-wrap gap-2">
+          {
+            pkg.stay.tags.map((tag: string) => (
+              <li class="rounded-[100px] bg-white px-4 py-1.5 text-sm text-[var(--ink-900)]">{tag}</li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Pick any two -->
+  <section aria-labelledby="pick-heading" class="bg-white px-5 py-16 md:px-gutter md:py-24">
+    <div class="mx-auto max-w-content">
+      <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+        <h2 id="pick-heading" class="text-[28px] font-bold tracking-[-0.03em] text-[var(--ink-900)] md:text-[38px]">
+          Pick any two experiences
+        </h2>
+        <p class="text-[15px] font-semibold text-[var(--green-900)]" data-picker-count>0 of 2 selected</p>
+      </div>
+
+      <fieldset class="mt-10 grid grid-cols-1 gap-5 border-0 p-0 md:grid-cols-2 min-[1200px]:grid-cols-3">
+        <legend class="sr-only">Pick any two experiences</legend>
+        {
+          pkg.experiences.map((exp: { id: string; name: string; duration: string; description: string }) => (
+            <label class="pkg-experience-card relative flex cursor-pointer flex-col rounded-[20px] border border-[var(--green-050)] p-5 transition-colors">
+              <input
+                type="checkbox"
+                name="experiences"
+                value={exp.id}
+                data-experience-name={exp.name}
+                form="package-request-form"
+                class="pkg-experience-checkbox absolute right-5 top-5 h-5 w-5 accent-[var(--orange-500)]"
+              />
+              <span class="pr-8 text-[11px] font-semibold uppercase tracking-[0.10em] text-[var(--green-900)]">
+                {exp.duration}
+              </span>
+              <span class="mt-2 pr-8 text-[16px] font-semibold tracking-[-0.03em] text-[var(--ink-900)]">
+                {exp.name}
+              </span>
+              <span class="mt-2 text-sm leading-[1.55] text-[var(--ink-500)]">{exp.description}</span>
+            </label>
+          ))
+        }
+      </fieldset>
+    </div>
+  </section>
+
+  <!-- 5. Pricing & payment -->
+  <section aria-labelledby="pricing-heading" class="bg-[var(--blue-100)] px-5 py-16 md:px-gutter md:py-24">
+    <div class="mx-auto max-w-content">
+      <h2 id="pricing-heading" class="text-[28px] font-bold tracking-[-0.03em] text-[var(--ink-900)] md:text-[38px]">
+        Pricing & payment
+      </h2>
+      <div class="mt-10 flex flex-col gap-6 min-[900px]:flex-row">
+        <div class="flex-1 rounded-[20px] bg-white p-6 md:p-8">
+          <h3 class="text-[11px] font-semibold uppercase tracking-[0.10em] text-[var(--ink-500)]">
+            Price per couple, by origin
+          </h3>
+          <table class="mt-4 w-full border-collapse text-left">
+            <tbody>
+              {
+                origins.map((origin) => {
+                  const price = pkg.pricePerCoupleByOrigin[origin.id];
+                  if (price === undefined) return null;
+                  const note = pkg.originNotes?.[origin.id];
+                  return (
+                    <tr class="border-t border-[var(--green-050)] first:border-t-0">
+                      <td class="py-3 pr-4 align-top">
+                        <span class="text-[15px] text-[var(--ink-900)]">{origin.label}</span>
+                        {note && <span class="mt-1 block text-xs text-[var(--ink-500)]">{note}</span>}
+                      </td>
+                      <td class="py-3 text-right align-top text-[17px] font-bold tracking-[-0.03em] text-[var(--green-900)]">
+                        R{fmt(price)}
+                      </td>
+                    </tr>
+                  );
+                })
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="flex-1 rounded-[20px] bg-white p-6 md:p-8">
+          <h3 class="text-[11px] font-semibold uppercase tracking-[0.10em] text-[var(--ink-500)]">
+            Payment instalments
+          </h3>
+          <table class="mt-4 w-full border-collapse text-left">
+            <thead>
+              <tr class="text-[11px] font-semibold uppercase tracking-[0.10em] text-[var(--ink-500)]">
+                <th class="pb-2 font-semibold">Booked</th>
+                <th class="pb-2 text-right font-semibold">Deposit</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                instalmentTiers.map((tier) => (
+                  <tr class="border-t border-[var(--green-050)]">
+                    <td class="py-3 pr-4 text-[15px] text-[var(--ink-900)]">{tier.label}</td>
+                    <td class="py-3 text-right text-[15px] font-semibold text-[var(--green-900)]">
+                      {Math.round(tier.depositFraction * 100)}%
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+          <p class="mt-4 text-xs leading-[1.55] text-[var(--ink-500)]">
+            Balance is due {pkg.finalPaymentDaysBefore} days before departure.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Extend your stay -->
+  {
+    pkg.extendable && (
+      <section aria-labelledby="extend-heading" class="bg-white px-5 py-16 md:px-gutter md:py-24">
+        <div class="mx-auto flex max-w-content flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h2
+              id="extend-heading"
+              class="text-[24px] font-bold tracking-[-0.03em] text-[var(--ink-900)] md:text-[32px]"
+            >
+              Want to stay longer?
+            </h2>
+            <p class="mt-2 max-w-lg text-[15px] leading-[1.55] text-[var(--ink-500)]">
+              We can extend {pkg.name} by however many nights you like — tell us in the notes below and we'll
+              re-quote it.
+            </p>
+          </div>
+          <a
+            href="#package-request-form"
+            class="btn inline-flex shrink-0 border border-[var(--green-900)] px-7 py-4 text-[var(--green-900)] transition-colors hover:bg-[var(--green-900)] hover:text-white"
+          >
+            Ask About Extending
+          </a>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- 7. Request form -->
+  <section id="package-request-form-section" aria-labelledby="request-heading" class="bg-[var(--blue-100)] px-5 py-16 md:px-gutter md:py-24">
+    <div class="mx-auto max-w-content">
+      <h2 id="request-heading" class="text-[28px] font-bold tracking-[-0.03em] text-[var(--ink-900)] md:text-[38px]">
+        Request this trip
+      </h2>
+      <p class="mt-2 max-w-lg text-[15px] leading-[1.55] text-[var(--ink-500)]">
+        This sends a WhatsApp message with your details — nothing is charged and nothing is submitted anywhere
+        else.
+      </p>
+
+      <div class="mt-10 flex flex-col-reverse gap-8 min-[900px]:flex-row">
+        <form id="package-request-form" class="flex-[1.4] rounded-[20px] bg-white p-6 md:p-8" novalidate>
+          <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+            <div class="md:col-span-1">
+              <label for="pkg-name" class="mb-1.5 block text-[13px] font-semibold text-[var(--ink-900)]"
+                >Full name</label
+              >
+              <input
+                type="text"
+                id="pkg-name"
+                name="name"
+                required
+                placeholder="e.g. Naledi Khumalo"
+                class="pkg-input w-full rounded-[12px] border border-[var(--green-050)] px-4 py-3 text-[15px]"
+              />
+              <p class="pkg-error mt-1.5 hidden text-xs text-[#B3261E]" data-error-for="name">Enter your full name.</p>
+            </div>
+
+            <div class="md:col-span-1">
+              <label for="pkg-phone" class="mb-1.5 block text-[13px] font-semibold text-[var(--ink-900)]"
+                >WhatsApp number</label
+              >
+              <input
+                type="tel"
+                id="pkg-phone"
+                name="phone"
+                required
+                placeholder="e.g. 082 123 4567"
+                class="pkg-input w-full rounded-[12px] border border-[var(--green-050)] px-4 py-3 text-[15px]"
+              />
+              <p class="pkg-error mt-1.5 hidden text-xs text-[#B3261E]" data-error-for="phone">
+                Enter a valid South African number (0XXXXXXXXX or +27XXXXXXXXX).
+              </p>
+            </div>
+
+            <div class="md:col-span-1">
+              <label for="pkg-email" class="mb-1.5 block text-[13px] font-semibold text-[var(--ink-900)]"
+                >Email <span class="font-normal text-[var(--ink-500)]">(optional)</span></label
+              >
+              <input
+                type="email"
+                id="pkg-email"
+                name="email"
+                placeholder="e.g. naledi@example.com"
+                class="pkg-input w-full rounded-[12px] border border-[var(--green-050)] px-4 py-3 text-[15px]"
+              />
+            </div>
+
+            <div class="md:col-span-1">
+              <label for="pkg-origin" class="mb-1.5 block text-[13px] font-semibold text-[var(--ink-900)]"
+                >Flying from</label
+              >
+              <select
+                id="pkg-origin"
+                name="origin"
+                required
+                class="pkg-input w-full appearance-none rounded-[12px] border border-[var(--green-050)] bg-white px-4 py-3 text-[15px]"
+              >
+                <option value="" selected disabled>Choose an origin</option>
+                {origins.map((origin) => <option value={origin.id}>{origin.label}</option>)}
+              </select>
+              <p class="pkg-error mt-1.5 hidden text-xs text-[#B3261E]" data-error-for="origin">
+                Choose where you're flying from.
+              </p>
+            </div>
+
+            <div class="md:col-span-1">
+              <label for="pkg-travellers" class="mb-1.5 block text-[13px] font-semibold text-[var(--ink-900)]"
+                >Travellers</label
+              >
+              <select
+                id="pkg-travellers"
+                name="travellers"
+                required
+                class="pkg-input w-full appearance-none rounded-[12px] border border-[var(--green-050)] bg-white px-4 py-3 text-[15px]"
+              >
+                <option value="" selected disabled>Choose travellers</option>
+                {travellerOptions.map((opt) => <option value={opt.id}>{opt.label}</option>)}
+              </select>
+              <p class="pkg-error mt-1.5 hidden text-xs text-[#B3261E]" data-error-for="travellers">
+                Choose how many are travelling.
+              </p>
+            </div>
+
+            <div class="md:col-span-1">
+              <label for="pkg-month" class="mb-1.5 block text-[13px] font-semibold text-[var(--ink-900)]"
+                >Preferred month</label
+              >
+              <select
+                id="pkg-month"
+                name="month"
+                required
+                class="pkg-input w-full appearance-none rounded-[12px] border border-[var(--green-050)] bg-white px-4 py-3 text-[15px]"
+              >
+                <option value="" selected disabled>Choose a month</option>
+                {months.map((m) => <option value={m.value}>{m.label}</option>)}
+              </select>
+              <p class="pkg-error mt-1.5 hidden text-xs text-[#B3261E]" data-error-for="month">
+                Choose a preferred month.
+              </p>
+            </div>
+
+            <div class="md:col-span-2">
+              <p class="pkg-error hidden text-xs text-[#B3261E]" data-error-for="experiences">
+                Pick exactly two experiences above.
+              </p>
+            </div>
+
+            <div class="md:col-span-2">
+              <label for="pkg-notes" class="mb-1.5 block text-[13px] font-semibold text-[var(--ink-900)]"
+                >Anything else <span class="font-normal text-[var(--ink-500)]">(optional)</span></label
+              >
+              <textarea
+                id="pkg-notes"
+                name="notes"
+                rows={3}
+                placeholder="Dietary needs, special occasions, questions…"
+                class="pkg-input w-full rounded-[12px] border border-[var(--green-050)] px-4 py-3 text-[15px]"
+              ></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="btn mt-6 w-full bg-[var(--orange-500)] text-white md:w-auto">
+            Send Request on WhatsApp
+          </button>
+        </form>
+
+        <div
+          class="flex-1 self-start rounded-[20px] bg-[var(--green-900)] p-6 text-[var(--cream-100)] md:p-8"
+          data-summary-card
+        >
+          <p class="text-[11px] font-semibold uppercase tracking-[0.10em] text-[var(--cream-100)]/70">
+            Your request
+          </p>
+          <p class="mt-3 text-[18px] font-bold tracking-[-0.03em]">
+            {pkg.name} <span class="font-normal text-[var(--cream-100)]/70">· {pkg.nights} nights</span>
+          </p>
+          <dl class="mt-5 flex flex-col gap-3 text-sm">
+            <div class="flex justify-between gap-4">
+              <dt class="text-[var(--cream-100)]/70">Departing</dt>
+              <dd data-summary-origin class="text-right">Choose an origin</dd>
+            </div>
+            <div class="flex justify-between gap-4">
+              <dt class="text-[var(--cream-100)]/70">Travellers</dt>
+              <dd data-summary-travellers class="text-right">Choose travellers</dd>
+            </div>
+          </dl>
+          <div class="mt-5 border-t border-[var(--cream-100)]/20 pt-5">
+            <div class="flex items-baseline justify-between">
+              <span class="text-sm text-[var(--cream-100)]/70">Total</span>
+              <span class="text-[22px] font-bold tracking-[-0.03em]" data-summary-total>—</span>
+            </div>
+            <div class="mt-1.5 flex items-baseline justify-between">
+              <span class="text-sm text-[var(--cream-100)]/70">Deposit due now</span>
+              <span class="text-[15px] font-semibold" data-summary-deposit>—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Book band -->
+  <section aria-labelledby="book-heading" class="bg-[var(--green-900)] px-5 py-14 md:px-gutter md:py-16">
+    <div
+      class="mx-auto flex max-w-content flex-col items-start gap-6 md:flex-row md:items-center md:justify-between"
+    >
+      <div>
+        <h2 id="book-heading" class="text-[22px] font-bold tracking-[-0.03em] text-[var(--cream-100)] md:text-[28px]">
+          {pkg.name} · {pkg.nights} nights
+        </h2>
+        <p class="mt-1 text-[15px] text-[var(--cream-100)]/75">
+          From <span class="font-semibold text-[var(--cream-100)]">R{heroPrice}</span> per couple
+        </p>
+      </div>
+      <a href="#package-request-form" class="btn w-full bg-[var(--orange-500)] text-white md:w-auto">
+        Request This Trip
+      </a>
+    </div>
+  </section>
+</div>
+
+<script type="application/json" id="package-data" set:html={JSON.stringify(clientData)} />
+<script src="../scripts/package-detail.js"></script>
+
+<style>
+  .pkg-hero {
+    background-size: cover;
+    background-position: center;
+    background-color: var(--green-900);
+  }
+
+  .pkg-hero-scrim {
+    background: linear-gradient(to top, rgba(14, 87, 74, 0.95) 0%, rgba(14, 87, 74, 0.2) 60%, rgba(14, 87, 74, 0) 100%);
+  }
+
+  .pkg-experience-card:has(.pkg-experience-checkbox:checked) {
+    border-color: var(--orange-500);
+    background-color: color-mix(in srgb, var(--orange-500) 6%, white);
+  }
+
+  .pkg-experience-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .pkg-input:focus-visible,
+  .pkg-experience-checkbox:focus-visible {
+    outline: 2px solid var(--orange-500);
+    outline-offset: 2px;
+  }
+
+  select.pkg-input {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%235A6B66'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 18px;
+    padding-right: 40px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pkg-experience-card {
+      transition: none !important;
+    }
+    .pkg-experience-card:hover {
+      transform: none !important;
+    }
+  }
+</style>
