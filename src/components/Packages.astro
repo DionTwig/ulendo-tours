@@ -58,12 +58,12 @@ const steps = [
       >
         Return flights, your stay, and two experiences you pick.
       </h2>
-      <p class="mx-auto mt-4 max-w-lg text-[15px] leading-[1.55] text-[var(--cream-100)]/80 md:text-[16px]">
+      <p class="mx-auto mt-4 max-w-lg text-[15px] leading-[1.55] text-[rgba(239,245,207,0.8)] md:text-[16px]">
         Four destinations, priced per couple. Departing Johannesburg, Cape Town, Durban and Gqeberha.
       </p>
 
       <div
-        class="mx-auto mt-10 grid max-w-3xl grid-cols-1 divide-y divide-[var(--cream-100)]/15 text-left md:grid-cols-3 md:divide-x md:divide-y-0"
+        class="mx-auto mt-10 grid max-w-3xl grid-cols-1 divide-y divide-[rgba(239,245,207,0.15)] text-left md:grid-cols-3 md:divide-x md:divide-y-0"
       >
         {
           steps.map((step) => (
@@ -72,7 +72,7 @@ const steps = [
                 {step.number}
               </p>
               <p class="mt-1.5 text-[15px] font-semibold text-[var(--cream-100)] md:text-[16px]">{step.title}</p>
-              <p class="mt-1.5 text-sm leading-[1.55] text-[var(--cream-100)]/70">{step.body}</p>
+              <p class="mt-1.5 text-sm leading-[1.55] text-[rgba(239,245,207,0.75)]">{step.body}</p>
             </div>
           ))
         }
@@ -122,7 +122,11 @@ const steps = [
                 </div>
 
                 <div class="flex flex-1 flex-col p-6">
-                  <h4 class="text-[20px] font-bold tracking-[-0.03em] text-[var(--ink-900)]">{pkg.name}</h4>
+                  <h4 class="text-[20px] font-bold tracking-[-0.03em] text-[var(--ink-900)]">{pkg.name}{
+                    pkg.region !== "South Africa" && (
+                      <span class="font-normal text-[var(--ink-500)]">, {pkg.region}</span>
+                    )
+                  }</h4>
                   <p class="mt-1 text-sm text-[var(--ink-500)]">{pkg.cardSubtitle}</p>
 
                   <ul class="mt-4 flex flex-col gap-2">
